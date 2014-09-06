@@ -35,3 +35,40 @@ function lower_total(){
         }
     }
 }
+
+function get_free(){
+    var count=0;
+    var  lists=Get_Shop_information();
+    for(var i=0;i<lists.length;i++){
+        count+=lists[i].prices*lists[i].num;
+    }
+    return count-get_all();
+}
+
+function get_discounts(){
+    var shop_Array= Get_Shop_information();
+    _.each(shop_Array,function(list){
+        var number=parseInt(list.num/3);
+        var free_price = number * list.prices;
+        if(list.kind=='饮料'||list.kind=='食品') {
+            if (list.num > 0) {
+                list.discounts = list.prices * list.num - free_price;
+            }
+            else {
+                list.discounts = 0;
+            }
+        }else{
+            list.discounts=list.prices * list.num;
+        }
+        localStorage['Shopping'] = JSON.stringify(shop_Array);
+    });
+}
+
+function get_all(){
+    var shop_Array = Get_Shop_information();
+    var count=0;
+    for(var i=0;i<shop_Array.length;i++){
+        count+=shop_Array[i].discounts;
+    }
+    return count;
+}

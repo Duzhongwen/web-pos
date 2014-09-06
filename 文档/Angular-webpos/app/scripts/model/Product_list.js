@@ -1,12 +1,13 @@
 /**
  * Created by duzhongwen on 14-9-6.
  */
-function Product_list(kind,name,prices,Unit,num){
+function Product_list(kind,name,prices,Unit,num,discounts){
     this.kind=kind;
     this.name=name;
     this.prices=prices;
     this.Unit=Unit;
     this.num=num;
+    this.discounts=discounts;
 }
 
 function Item(){

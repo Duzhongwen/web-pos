@@ -18,8 +18,10 @@ angular.module('angularWebposApp')
         $scope.num =Get_num();
         $scope.lists=Item();
         $scope.add_shopcat=function(list){
+            console.log(list);
           var product=new Product_list(list.kind,list.name,list.prices,list.Unit,1);
           product.storage(list.name);
+          get_discounts();
           $scope.num =Get_num();
         };
   });

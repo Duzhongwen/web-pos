@@ -31,7 +31,6 @@
         <!-- /.container-fluid -->
     </nav>
     <div class="container">
-
         <div class="panel panel-default">
             <div class="panel-heading" style="text-align: center"><h3>购物清单</h3></div>
             <div class="panel-body">
@@ -54,9 +53,14 @@
                         <td><div class="btn-group"><button type="button" class="btn btn-default" ng-click="lower(message.name)">-</button>
                             <a type="button" class="btn btn-default disabled">{{message.num}}</a>
                             <button type="button" class="btn btn-default" ng-click="add(message.name)">+</button></div></td>
-                        <td>{{discount}}</td>
+                        <td>{{message.discounts}}元</td>
                    </tbody>
                 </table>
+            </div>
+            <div class="well text-right">
+                <p>总计：<span>{{all}}</span></p>
+                <p>节省：<span>{{free}}</span></p>
+                <a class="btn btn-lg btn-primary" ng-click="enter_payment()">付款</a>
             </div>
         </div>
     </div>
