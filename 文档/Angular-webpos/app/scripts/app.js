@@ -26,6 +26,10 @@ angular
         templateUrl: 'views/Shopping_cat.html',
         controller: 'Shoppingcat_Controller'
       })
+      .when('/Payment', {
+        templateUrl: 'views/Payment.html',
+        controller: 'Payment_Controller'
+      })
       .otherwise({
         redirectTo: '/main'
       });

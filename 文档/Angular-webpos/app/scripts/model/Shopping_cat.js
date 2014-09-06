@@ -45,6 +45,14 @@ function get_free(){
     return count-get_all();
 }
 
+function Automatically_jump(){
+    var shop_Array= Get_Shop_information();
+    var lists=_.filter(shop_Array,function(list){
+        return list.num==0;
+    });
+    return (lists.length==shop_Array.length);
+}
+
 function get_discounts(){
     var shop_Array= Get_Shop_information();
     _.each(shop_Array,function(list){
