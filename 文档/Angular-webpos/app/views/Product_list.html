@@ -1,0 +1,96 @@
+<div>
+    <nav class="navbar navbar-inverse" role="navigation">
+        <div class="container-fluid">
+            <!-- Brand and toggle get grouped for better mobile display -->
+            <div class="navbar-header">
+                <button type="button" class="navbar-toggle collapsed" data-toggle="collapse"
+                        data-target="#bs-example-navbar-collapse-9">
+                    <span class="sr-only">Toggle navigation</span>
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                </button>
+                <a class="navbar-brand" >Let's Go</a>
+            </div>
+
+            <!-- Collect the nav links, forms, and other content for toggling -->
+            <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-9">
+                <ul class="nav navbar-nav">
+                    <li><a ng-click="enter_main()">主页</a></li>
+                    <li class="active"><a>商品列表</a></li>
+                </ul>
+
+                <ul class="nav navbar-nav navbar-right">
+                    <li style="margin-right: 50px;"><a ng-click="enter_shopcat()"><span class="glyphicon glyphicon-shopping-cart"></span>购物车(<span id="shop">0</span>)</a></li>
+                </ul>
+            </div>
+            <!-- /.navbar-collapse -->
+
+
+        </div>
+        <!-- /.container-fluid -->
+    </nav>
+    <div class="container">
+
+        <div class="panel panel-default">
+            <div class="panel-heading" style="text-align: center"><h3>商品列表</h3></div>
+            <div class="panel-body">
+                <table class="table table-bordered text-center">
+                    <thead>
+                    <tr>
+                        <th class="text-center">分类</th>
+                        <th class="text-center">名称</th>
+                        <th class="text-center">单价(元)</th>
+                        <th class="text-center">单位</th>
+                        <th class="text-center"></th>
+                    </tr>
+                    </thead>
+                    <tbody>
+                    <tr>
+                        <td>饮料</td>
+                        <td>可口可乐</td>
+                        <td>3</td>
+                        <td>瓶</td>
+                        <td><button class="btn-primary " >加入购物车</button></td>
+                    </tr>
+                    <tr>
+                        <td>饮料</td>
+                        <td>雪碧</td>
+                        <td>3</td>
+                        <td>瓶</td>
+                        <td><button class="btn-primary" >加入购物车</button></td>
+                    </tr>
+                    <tr>
+                        <td>水果</td>
+                        <td>苹果</td>
+                        <td>5.5</td>
+                        <td>斤</td>
+                        <td><button class="btn-primary" >加入购物车</button></td>
+                    </tr>
+                    <tr>
+                        <td>水果</td>
+                        <td>荔枝</td>
+                        <td>15</td>
+                        <td>斤</td>
+                        <td><button class="btn-primary" >加入购物车</button></td>
+                    </tr>
+                    <tr>
+                        <td>生活用品</td>
+                        <td>电池</td>
+                        <td>2</td>
+                        <td>个</td>
+                        <td><button class="btn-primary" >加入购物车</button></td>
+                    </tr>
+                    <tr>
+                        <td>食品</td>
+                        <td>方便面</td>
+                        <td>4.5</td>
+                        <td>袋</td>
+                        <td><button class="btn-primary" >加入购物车</button></td>
+                    </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+</div>
