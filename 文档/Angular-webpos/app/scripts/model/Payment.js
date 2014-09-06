@@ -18,6 +18,13 @@ function get_free_count(){
     return number;
 }
 
+function Initialization(){
+    var shop_Array = Get_Shop_information();
+    shop_Array=[];
+    localStorage.setItem('total',0);
+    localStorage['Shopping'] = JSON.stringify(shop_Array);
+}
+
 function jugement_show(num,kind){
     if(kind=='饮料'||kind=='食品'){
         return num>=3;
@@ -27,9 +34,7 @@ function jugement_show(num,kind){
 function get_free_shop() {
     var list=get_discount_shop();
     var lists = _.filter(list, function (lin) {
-        console.log(lin.kind);
         return  lin.kind=="饮料"||lin.kind=="食品";
     });
-    console.log(lists);
-      return lists;
+    return lists;
 }
