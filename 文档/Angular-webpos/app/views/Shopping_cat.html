@@ -17,11 +17,11 @@
             <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-9">
                 <ul class="nav navbar-nav">
                     <li><a ng-click="enter_main()">主页</a></li>
-                    <li class="active"><a>商品列表</a></li>
+                    <li><a ng-click="enter_product()">商品列表</a></li>
                 </ul>
 
                 <ul class="nav navbar-nav navbar-right">
-                    <li style="margin-right: 50px;"><a ng-click="enter_shopcat()"><span class="glyphicon glyphicon-shopping-cart"></span>购物车({{num}})</a></li>
+                    <li style="margin-right: 50px;"><a><span class="glyphicon glyphicon-shopping-cart"></span>购物车({{num}})</a></li>
                 </ul>
             </div>
             <!-- /.navbar-collapse -->
@@ -33,7 +33,7 @@
     <div class="container">
 
         <div class="panel panel-default">
-            <div class="panel-heading" style="text-align: center"><h3>商品列表</h3></div>
+            <div class="panel-heading" style="text-align: center"><h3>购物清单</h3></div>
             <div class="panel-body">
                 <table class="table table-bordered text-center">
                     <thead>
@@ -46,14 +46,8 @@
                     </tr>
                     </thead>
                     <tbody>
-                    <tr ng-repeat="list in lists">
-                        <td>{{list.kind}}</td>
-                        <td>{{list.name}}</td>
-                        <td>{{list.prices}}</td>
-                        <td>{{list.Unit}}</td>
-                        <td><button class="btn-primary " ng-click="add_shopcat(list)">加入购物车</button></td>
-                    </tr>
-                    </tbody>
+
+                   </tbody>
                 </table>
             </div>
         </div>
