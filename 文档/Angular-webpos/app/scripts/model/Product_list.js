@@ -23,12 +23,7 @@ function Item(){
 Product_list.prototype.storage=function(name){
     var shop_Array= JSON.parse(localStorage['Shopping'] || '[]');
     var list= _.findWhere(shop_Array,{'name':name});
-    var a=localStorage.getItem('total');
-    if(a==0){
-        localStorage.setItem('total',1);
-    }else{
-        localStorage.setItem('total',parseInt(localStorage.getItem('total'))+1);
-    }
+    add_total();
     if(list==undefined) {
         shop_Array.unshift(this);
     }else{
@@ -41,9 +36,18 @@ function Get_num(){
     return  localStorage.getItem('total');
 }
 
+function add_total(){
+    var total=localStorage.getItem('total');
+    if(total==0){
+        localStorage.setItem('total',1);
+    }else{
+        localStorage.setItem('total',parseInt(localStorage.getItem('total'))+1);
+    }
+}
+
 function Get_total(){
-    var a=localStorage.getItem('total');
-    if(a==undefined){
+    var total=Get_num();
+    if(total==undefined){
         localStorage.setItem('total',0)
     }
 }

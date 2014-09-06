@@ -42,11 +42,19 @@
                         <th class="text-center">名称</th>
                         <th class="text-center">单价(元)</th>
                         <th class="text-center">单位</th>
-                        <th class="text-center"></th>
+                        <th class="text-center">数量</th>
+                        <th class="text-center">小计</th>
                     </tr>
                     </thead>
-                    <tbody>
-
+                    <tbody ng-repeat="message in Message" class="text-center">
+                        <td>{{message.kind}}</td>
+                        <td>{{message.name}}</td>
+                        <td>{{message.prices}}</td>
+                        <td>{{message.Unit}}</td>
+                        <td><div class="btn-group"><button type="button" class="btn btn-default" ng-click="lower(message.name)">-</button>
+                            <a type="button" class="btn btn-default disabled">{{message.num}}</a>
+                            <button type="button" class="btn btn-default" ng-click="add(message.name)">+</button></div></td>
+                        <td>{{discount}}</td>
                    </tbody>
                 </table>
             </div>
