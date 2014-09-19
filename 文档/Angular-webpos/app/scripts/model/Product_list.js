@@ -21,34 +21,34 @@ function Item(){
     ];
 }
 
-Product_list.prototype.storage=function(name){
-    var shop_Array= JSON.parse(localStorage['Shopping'] || '[]');
-    var list= _.findWhere(shop_Array,{'name':name});
+Product_list.prototype.storage = function(name) {
+    var shop_array = JSON.parse(localStorage['Shopping'] || '[]');
+    var list = _.findWhere(shop_array,{'name':name});
     add_total();
-    if(list==undefined) {
-        shop_Array.unshift(this);
+    if(list == undefined) {
+        shop_array.unshift(this);
     }else{
-        list.num+=1;
+        list.num += 1;
     }
-    localStorage['Shopping'] = JSON.stringify(shop_Array);
+    localStorage['Shopping'] = JSON.stringify(shop_array);
 };
 
-function Get_num(){
+function Get_num() {
     return  localStorage.getItem('total');
 }
 
-function add_total(){
-    var total=localStorage.getItem('total');
-    if(total==0){
+function add_total() {
+    var total = localStorage.getItem('total');
+    if(total == 0) {
         localStorage.setItem('total',1);
     }else{
         localStorage.setItem('total',parseInt(localStorage.getItem('total'))+1);
     }
 }
 
-function Get_total(){
-    var total=Get_num();
-    if(total==undefined){
+function Get_total() {
+    var total = Get_num();
+    if(total == undefined) {
         localStorage.setItem('total',0)
     }
 }

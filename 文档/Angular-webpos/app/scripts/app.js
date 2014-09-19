@@ -16,15 +16,15 @@ angular
     $routeProvider
       .when('/main', {
         templateUrl: 'views/main.html',
-        controller: 'MainController'
+        controller: 'Main_Controller'
       })
       .when('/Product_list', {
         templateUrl: 'views/Product_list.html',
         controller: 'Product_Controller'
       })
-      .when('/Shopping_cat', {
-        templateUrl: 'views/Shopping_cat.html',
-        controller: 'Shoppingcat_Controller'
+      .when('/Shopping_car', {
+        templateUrl: 'views/Shopping_car.html',
+        controller: 'Shopping_car_Controller'
       })
       .when('/Payment', {
         templateUrl: 'views/Payment.html',
