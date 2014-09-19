@@ -1,0 +1,54 @@
+<%- include header %>
+  <div class="container">
+    <div class="panel panel-default">
+        <div class="panel-heading"><h4>购物清单</h4></div>
+data
+        <div class="panel-body">
+            <table class="table table-bordered">
+                <thead>
+                <tr>
+                    <th class='text-center'>分类</th>
+                    <th class='text-center'>名称</th>
+                    <th class='text-center'>单价(元)</th>
+                    <th class='text-center'>单位</th>
+                    <th class='text-center'>数量</th>
+                    <th class='text-center'>小计</th>
+                </tr>
+                </thead>
+                <tbody class='text-center'>
+                <td>{{}}</td>
+                <td>{{}}</td>
+                <td>{{}}</td>
+                <td>{{}}</td>
+                <td>{{}}</td>
+                <td>{{}}元<span ng-show="juge()">(原价:{{}}元)</span></td>
+                </tbody>
+            </table>
+        </div>
+    </div>
+    <div class="panel panel-default">
+        <div class="panel-heading"><h4>赠送物品</h4></div>
+        <div class="panel-body">
+            <table class="table table-bordered">
+                <thead>
+                <tr>
+                    <th class='text-center'>分类</th>
+                    <th class='text-center'>名称</th>
+                    <th class='text-center'>数量</th>
+                </tr>
+                </thead>
+                <tbody class='text-center'>
+                <td>{{}}</td>
+                <td>{{}}</td>
+                <td>{{}}</td>
+                </tbody>
+            </table>
+            <div class="well text-right">
+            <p>总计：<span>{{all}}</span></p>
+            <p>节省：<span>{{free}}</span></p>
+            <button class="btn btn-lg btn-primary" ng-click="pay()">付款</button>
+            </div>
+        </div>
+    </div>
+</div>
+<%- include footer %>

@@ -1,0 +1,36 @@
+<%- include header %>
+  <div class="container">
+        <div class="panel panel-default">
+            <div class="panel-heading" style="text-align: center"><h3>购物清单</h3></div>
+            <div class="panel-body">
+                <table class="table table-bordered text-center">
+                    <thead>
+                    <tr>
+                        <th class="text-center">分类</th>
+                        <th class="text-center">名称</th>
+                        <th class="text-center">单价(元)</th>
+                        <th class="text-center">单位</th>
+                        <th class="text-center">数量</th>
+                        <th class="text-center">小计</th>
+                    </tr>
+                    </thead>
+                    <tbody ng-repeat="message in Message" class="text-center">
+                        <td>{{}}</td>
+                        <td>{{}}</td>
+                        <td>{{}}</td>
+                        <td>{{}}</td>
+                        <td><div class="btn-group"><button type="button" class="btn btn-default" ng-click="lower(message.name)">-</button>
+                            <a type="button" class="btn btn-default disabled">{{}}</a>
+                            <button type="button" class="btn btn-default" ng-click="add(message.name)">+</button></div></td>
+                        <td>{{}}元</td>
+                   </tbody>
+                </table>
+            </div>
+            <div class="well text-right">
+                <p>总计：<span>{{all}}</span></p>
+                <p>节省：<span>{{free}}</span></p>
+                <a class="btn btn-lg btn-primary" href="/Payment">付款</a>
+            </div>
+        </div>
+    </div>
+<%- include footer %>
