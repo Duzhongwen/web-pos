@@ -2,17 +2,63 @@
  * GET home page.
  */
 
+var Shop = require('../models/shopping.js');
+var _ = require('../public/underscore');
+
 module.exports = function(app) {
   app.get('/', function (req, res) {
-    res.render('index', { title: '主页' });
+      if(!req.session.cart){
+          req.session.cart = [];
+      }
+      if(!req.session.total){
+          req.session.total = 0;
+      }
+    res.render('index', { title: '主页' ,total:req.session.total });
   });
   app.get('/Product_list', function (req, res) {
-   res.render('Product_list', { title: '商品列表' });
-  });  
+      Shop.get(function(err,products){
+          var product = products;
+          if(err){
+              product = [];
+          }
+          res.render('Product_list',{
+              title:"商品列表",
+              total:req.session.total,
+              products:product
+          });
+      });
+  });
+  app.post('/addCart',function(req,res){
+      var shop = req.body.product;
+      console.log(shop);
+      var shop_car=req.session.cart;
+      var shop_thing = _.findWhere(shop_car,{'name':shop.name});
+      if(shop_thing!=undefined){
+          shop.num=shop_thing.num+1;
+          var index = _.indexOf(shop_car,shop_thing);
+          shop_car[index] = shop;
+      }else{
+          shop.num=1;
+          shop_car.push(shop);
+      }
+      req.session.cart = shop_car;
+      var total = req.session.total + 1;
+      req.session.total = total;
+      res.send(req.session.total);
+      res.end();
+    });
+
   app.get('/Shop_cat', function (req, res) {
-   res.render('Shop_cat', { title: '购物车' });
+
+    res.render('Shop_cat', {
+       title: '购物车',
+       total:req.session.total,
+       products:req.session.cart,
+       all:0,
+       free:0
+    });
   });
   app.get('/Payment', function (req, res) {
-   res.render('Payment', { title: '付款 ' });
+   res.render('Payment', { title: '付款 ',total:req.session.total });
   });
 };

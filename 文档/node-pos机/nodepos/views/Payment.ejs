@@ -1,4 +1,5 @@
 <%- include header %>
+<script src="javascripts/viewStage/payment.js"></script>
   <div class="container">
     <div class="panel panel-default">
         <div class="panel-heading"><h4>购物清单</h4></div>
@@ -46,7 +47,7 @@
             <div class="well text-right">
             <p>总计：<span>{{all}}</span></p>
             <p>节省：<span>{{free}}</span></p>
-            <button class="btn btn-lg btn-primary" ng-click="pay()">付款</button>
+            <button class="btn btn-lg btn-primary" href='/pay'>付款</button>
             </div>
         </div>
     </div>

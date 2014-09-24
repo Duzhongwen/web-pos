@@ -1,4 +1,5 @@
 <%- include header %>
+<script src="javascripts/viewStage/shop_cat.js"></script>
   <div class="container">
         <div class="panel panel-default">
             <div class="panel-heading" style="text-align: center"><h3>购物清单</h3></div>
@@ -15,21 +16,25 @@
                         <th class="text-center">小计</th>
                     </tr>
                     </thead>
-                    <tbody ng-repeat="message in Message" class="text-center">
-                        <td>{{}}</td>
-                        <td>{{}}</td>
-                        <td>{{}}</td>
-                        <td>{{}}</td>
-                        <td><div class="btn-group"><button type="button" class="btn btn-default" ng-click="lower(message.name)">-</button>
+                    <%  products.forEach(function(product,index){%>
+                    <tr>
+                        <td><%= product.kind %></td>
+                        <td><%= product.name %></td>
+                        <td><%= product.price %></td>
+                        <td><%= product.unit %></td>
+                        <td>
+                        <td><div class="btn-group"><button type="button" class="btn btn-default" href="/less">-</button>
                             <a type="button" class="btn btn-default disabled">{{}}</a>
-                            <button type="button" class="btn btn-default" ng-click="add(message.name)">+</button></div></td>
+                            <button type="button" class="btn btn-default" href="/add">+</button></div>
+                        </td>
                         <td>{{}}元</td>
+                        <% }) %>
                    </tbody>
                 </table>
             </div>
             <div class="well text-right">
-                <p>总计：<span>{{all}}</span></p>
-                <p>节省：<span>{{free}}</span></p>
+                <p><span>总计：<%= all %>元</span><p>
+                <p><span>节省：<%= free %>元</span><p>
                 <a class="btn btn-lg btn-primary" href="/Payment">付款</a>
             </div>
         </div>
