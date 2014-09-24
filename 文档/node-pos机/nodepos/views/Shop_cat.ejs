@@ -22,9 +22,10 @@
                         <td><%= product.price %></td>
                         <td><%= product.unit %></td>
                         <td><div class="btn-group">
-                            <button type="button" class="btn btn-default" href="/less">-</button>
+                            <a type="button" class="btn btn-default" href="/less?name=<%= product.name %>">-</a>
                             <a type="button" class="btn btn-default disabled"><%= product.num %></a>
-                            <button type="button" class="btn btn-default" href="/add">+</button></div>
+                            <a type="button" class="btn btn-default" href="/add?name=<%= product.name %>">+</a>
+                            </div>
                         </td>
                        <% if(product.discounts=="true"&&product.num>2){ %>
                        <td><%= free= (product.num%3 +parseInt(product.num/3)*2) * product.price %>元(原价：<%= product.num * product.price%>元)</td>

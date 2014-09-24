@@ -30,7 +30,6 @@ module.exports = function(app) {
   });
   app.post('/addCart',function(req,res){
       var shop = req.body.product;
-      console.log(shop);
       var shop_car=req.session.cart;
       var shop_thing = _.findWhere(shop_car,{'name':shop.name});
       if(shop_thing!=undefined){
@@ -42,7 +41,6 @@ module.exports = function(app) {
           shop_car.push(shop);
       }
       req.session.cart = shop_car;
-      console.log(req.session.cart);
       req.session.total += 1;
       res.writeHead(200,{"Content-Type":"text/plain"});
       res.write(req.session.total+'');
@@ -51,22 +49,27 @@ module.exports = function(app) {
 
   app.get('/less',function(req,res){
       var cart=req.session.cart;
-      var name=req.body.name;
-      console.log(req.query.product.name+"----------------------------------------");
+      var name=req.query.name;
       var product= _.findWhere(cart,{'name':name});
+      console.log(product);
       if(product.num>0){
         product.num -= 1;
       }else{
         product.num=0;
       }
+      req.session.total -= 1;
+      if(req.session.total<1){
+          req.session.total=0;
+      }
       req.session.cart=cart;
       if(req.session.total==0){
           res.redirect('/Product_list');
+      }else{
+          res.redirect('/Shop_cat');
       }
     });
 
   app.get('/Shop_cat', function (req, res) {
-    console.log(req.session.cart);
     res.render('Shop_cat', {
        title: '购物车',
        total:req.session.total,
