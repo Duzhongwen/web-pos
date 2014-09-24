@@ -5,7 +5,7 @@ function Product(product) {
   this.name = product.name;
   this.price = product.price;
   this.unit = product.unit;
-  this.num = product.num;
+  this.discounts=product.discounts;
 };
 
 module.exports = Product;
@@ -18,7 +18,7 @@ Product.prototype.save = function(callback) {
       name: this.name,
       price: this.price,
       unit: this.unit,
-      num: this.num
+      discounts: this.discounts
   };
   //打开数据库
   mongodb.open(function (err, db) {

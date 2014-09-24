@@ -13,7 +13,8 @@ $(function(){
             kind:information[0],
             name:information[1],
             price:information[2],
-            unit:information[3]
+            unit:information[3],
+            discounts:information[4]
         };
         $.post('/addCart',{product:shop},function(data){
             $('#cart_total').text(data);
