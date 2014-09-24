@@ -5,11 +5,9 @@
     <title><%= title %></title>
     <meta name="description" content="">
     <meta name="viewport" content="width=device-width">
-    <link rel='stylesheet' href='/stylesheets/style.css' />
-    <link rel='stylesheet' href='/stylesheets/bootstrap.css' />
-    <link rel="stylesheet" href='/stylesheets/bootstrap.min.css' />
-    <link rel='stylesheet' href='/stylesheets/main.css' />
+    <link rel='stylesheet' href='/bootstrap/dist/css/bootstrap.css' />
     <script src="/jquery/dist/jquery.js"></script>
+    <script src="/bootstrap/dist/js/bootstrap.js"></script>
 </head>
 <body>
 <nav class="navbar navbar-inverse" role="navigation">
@@ -31,7 +29,7 @@
             </ul>
 
             <ul class="nav navbar-nav navbar-right">
-              <li style="margin-right: 50px;"><a href="/Shop_cat"><span class="glyphicon glyphicon-shopping-cart"></span>购物车(<span><%= total %></span>)</a></li>
+              <li style="margin-right: 50px;"><a href="/Shop_cat"><span class="glyphicon glyphicon-shopping-cart"></span>购物车(<span id="cart_total"><%= total %></span>)</a></li>
             </ul>
         </div><!-- /.navbar-collapse -->
 

@@ -16,7 +16,7 @@ $(function(){
             unit:information[3]
         };
         $.post('/addCart',{product:shop},function(data){
-            $('#cart span').text(data);
+            $('#cart_total').text(data);
         });
     });
 

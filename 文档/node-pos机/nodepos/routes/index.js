@@ -30,7 +30,6 @@ module.exports = function(app) {
   });
   app.post('/addCart',function(req,res){
       var shop = req.body.product;
-      console.log(shop);
       var shop_car=req.session.cart;
       var shop_thing = _.findWhere(shop_car,{'name':shop.name});
       if(shop_thing!=undefined){
@@ -42,9 +41,9 @@ module.exports = function(app) {
           shop_car.push(shop);
       }
       req.session.cart = shop_car;
-      var total = req.session.total + 1;
-      req.session.total = total;
-      res.send(req.session.total);
+      req.session.total += 1;
+      res.writeHead(200,{"Content-Type":"text/plain"});
+      res.write(req.session.total+'');
       res.end();
     });
 
