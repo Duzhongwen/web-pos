@@ -6,24 +6,28 @@
         <span id="time">2014年08月27 20:49:15</span>
         <div class="panel-body">
             <table class="table table-bordered">
-                <thead>
                 <tr>
-                    <th class='text-center'>分类</th>
-                    <th class='text-center'>名称</th>
-                    <th class='text-center'>单价(元)</th>
-                    <th class='text-center'>单位</th>
-                    <th class='text-center'>数量</th>
-                    <th class='text-center'>小计</th>
-                </tr>
-                </thead>
-                <tbody class='text-center'>
-                <td></td>
-                <td></td>
-                <td></td>
-                <td></td>
-                <td></td>
-                <td>元<span ng-show="juge()">(原价:元)</span></td>
-                </tbody>
+                                   <td>分类</td>
+                                   <td>名称</td>
+                                   <td>单元(元)</td>
+                                   <td>单位</td>
+                                   <td>数量</td>
+                                   <td>小计</td>
+                               </tr>
+                               <% var count = 0,subtotal = 0;products.forEach(function(product,index){%>
+                               <tr>
+                                   <td><%= product.kind %></td>
+                                   <td><%= product.name %></td>
+                                   <td><%= product.price %></td>
+                                   <td><%= product.unit %></td>
+                                   <td><%= product.num %></td>
+                                   <% if(product.discounts == "true"&&product.num>2){ %>
+                                   <td><%= subtotal = (product.num%3 +parseInt(product.num/3)*2) * product.price %>元(原价：<%= product.num * product.price%>元)</td>
+                                   <% }else{%>
+                                   <td><%= subtotal = product.num * product.price%>元</td>
+                                   <% } %>
+                               </tr>
+                               <% count += subtotal; }) %>
             </table>
         </div>
     </div>
@@ -45,7 +49,7 @@
                 </tbody>
             </table>
             <div class="well text-right">
-            <p>总计：<span>元</span></p>
+            <p>总计：<span><%= count %>元</span></p>
             <p>节省：<span>元</span></p>
             <button class="btn btn-lg btn-primary" href='/pay'>付款</button>
             </div>

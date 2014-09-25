@@ -51,22 +51,32 @@ module.exports = function(app) {
       var cart=req.session.cart;
       var name=req.query.name;
       var product= _.findWhere(cart,{'name':name});
-      console.log(product);
       if(product.num>0){
         product.num -= 1;
       }else{
-        product.num=0;
+        product.num = 0;
       }
       req.session.total -= 1;
-      if(req.session.total<1){
-          req.session.total=0;
+      if(req.session.total <1){
+          req.session.total = 0;
       }
-      req.session.cart=cart;
-      if(req.session.total==0){
+      req.session.cart = cart;
+      if(req.session.total == 0){
           res.redirect('/Product_list');
       }else{
           res.redirect('/Shop_cat');
       }
+    });
+
+    app.get('/add',function(req,res){
+        var cart=req.session.cart;
+        var name=req.query.name;
+        var product= _.findWhere(cart,{'name':name});
+        product.num += 1;
+        req.session.total += 1;
+        req.session.cart = cart;
+        res.redirect('/Shop_cat');
+
     });
 
   app.get('/Shop_cat', function (req, res) {
@@ -77,6 +87,11 @@ module.exports = function(app) {
     });
   });
   app.get('/Payment', function (req, res) {
-   res.render('Payment', { title: '付款 ',total:req.session.total });
+   console.log(req.session.cart);
+   res.render('Payment', {
+       title: '付款 ',
+       total:req.session.total,
+       products:req.session.cart
+   });
   });
 };
