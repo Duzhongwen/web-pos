@@ -7,10 +7,10 @@ var _ = require('../public/underscore');
 
 module.exports = function(app) {
   app.get('/', function (req, res) {
-      if(req.session.cart){
+      if(!req.session.cart){
           req.session.cart = [];
       }
-      if(req.session.total){
+      if(!req.session.total){
           req.session.total = 0;
       }
     res.render('index', { title: '主页' ,total:req.session.total });
@@ -52,16 +52,17 @@ module.exports = function(app) {
       var name=req.query.name;
       var product= _.findWhere(cart,{'name':name});
       if(product.num>0) {
+        req.session.total -= 1;
         product.num -= 1;
       }else{
         product.num = 0;
       }
-      req.session.total -= 1;
       if(req.session.total <1) {
           req.session.total = 0;
       }
       req.session.cart = cart;
       if(req.session.total == 0){
+          req.session.cart=[];
           res.redirect('/Product_list');
       }else{
           res.redirect('/Shop_cat');
@@ -89,7 +90,6 @@ module.exports = function(app) {
   app.get('/Payment', function (req, res) {
    var cart = req.session.cart;
    var free = [];
-   console.log(cart);
    _.each(cart,function(list) {
     if (list.discounts=='true'&&list.num>2) {
         var frees = _.clone(list);
@@ -97,7 +97,6 @@ module.exports = function(app) {
         free.push(frees);
     }
    });
-   console.log(cart);
    res.render('Payment', {
        title: '付款 ',
        total:req.session.total,
@@ -105,4 +104,9 @@ module.exports = function(app) {
        free_product:free
    });
   });
+  app.get('/pay',function(req,res) {
+      req.session.total = 0;
+      req.session.cart = [];
+      res.redirect('/Product_list');
+  })
 };
