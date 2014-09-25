@@ -7,10 +7,10 @@ var _ = require('../public/underscore');
 
 module.exports = function(app) {
   app.get('/', function (req, res) {
-      if(!req.session.cart){
+      if(req.session.cart){
           req.session.cart = [];
       }
-      if(!req.session.total){
+      if(req.session.total){
           req.session.total = 0;
       }
     res.render('index', { title: '主页' ,total:req.session.total });
@@ -47,17 +47,17 @@ module.exports = function(app) {
       res.end();
     });
 
-  app.get('/less',function(req,res){
+  app.get('/less',function(req,res) {
       var cart=req.session.cart;
       var name=req.query.name;
       var product= _.findWhere(cart,{'name':name});
-      if(product.num>0){
+      if(product.num>0) {
         product.num -= 1;
       }else{
         product.num = 0;
       }
       req.session.total -= 1;
-      if(req.session.total <1){
+      if(req.session.total <1) {
           req.session.total = 0;
       }
       req.session.cart = cart;
@@ -68,7 +68,7 @@ module.exports = function(app) {
       }
     });
 
-    app.get('/add',function(req,res){
+    app.get('/add',function(req,res) {
         var cart=req.session.cart;
         var name=req.query.name;
         var product= _.findWhere(cart,{'name':name});
@@ -87,11 +87,22 @@ module.exports = function(app) {
     });
   });
   app.get('/Payment', function (req, res) {
-   console.log(req.session.cart);
+   var cart = req.session.cart;
+   var free = [];
+   console.log(cart);
+   _.each(cart,function(list) {
+    if (list.discounts=='true'&&list.num>2) {
+        var frees = _.clone(list);
+        frees.num=parseInt(frees.num/3);
+        free.push(frees);
+    }
+   });
+   console.log(cart);
    res.render('Payment', {
        title: '付款 ',
        total:req.session.total,
-       products:req.session.cart
+       products:req.session.cart,
+       free_product:free
    });
   });
 };
