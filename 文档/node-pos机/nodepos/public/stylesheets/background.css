@@ -1,0 +1,125 @@
+/*
+header
+*/
+.container-fluid{
+    border:2px solid #888;
+    padding:0;
+}
+
+.col-md-12,.col-md-2,.col-md-10{
+    padding:0;
+}
+
+.head{
+    border:1px solid #888888;
+    width:100%;
+    background-color:#eee;
+}
+
+.head img{
+    padding: 10px 30px 0 40px;
+    float:left;
+}
+.head p{
+    padding-top:10px;
+    font-size:20px;
+}
+
+.bar{
+    margin:0;
+    padding:0;
+    height:500px;
+    border: 1px solid #888;
+    background-color: #bbbbbb;
+}
+
+.bar li{
+    height:40px;
+    line-height: 40px;
+    list-style-type: none;
+    border-bottom: 1px solid #888;
+    text-align:center;
+}
+
+.bar a{
+    font-size:16px;
+    text-decoration: none;
+    color:#000;
+}
+
+.bar a:hover{
+    color:#fff;
+}
+
+.content{
+    border:1px solid #888;
+    height:500px;
+}
+
+/*
+shopManage
+*/
+.shopManage p,.shopManage a{
+    margin-bottom:20px;
+}
+
+.shopManage{
+    padding:10px 10px 0 10px;
+}
+
+.shopManage .table a{
+    margin:0 10px 0 0;
+}
+
+.shopManage .table a:hover{
+    color:#00f;
+}
+
+.shopManage .shopNum{
+    padding:0;
+    width:34px;
+    height:34px;
+}
+/*
+addShopAttr
+*/
+.addShopAttr{
+    padding:10px 10px 0 10px;
+}
+
+.addShopAttr .formAdd{
+    padding-top:30px;
+}
+
+.addShopAttr .formAdd form label{
+    text-align: left;
+    width:auto;
+}
+
+.formAdd form .btn{
+    margin-left:60px;
+}
+
+.addShopAttr .nav a:hover{
+    color:#000;
+    text-decoration:none;
+}
+
+/*
+addShop
+*/
+.addShop{
+    padding:30px 20px 0 20px;
+}
+
+.addShop .shopForm .form-group{
+    margin-bottom: 20px;
+}
+
+.addShop .shopForm label{
+    width:auto;
+}
+
+.addShop .shopForm .btnBar{
+    margin-bottom:30px;
+}
