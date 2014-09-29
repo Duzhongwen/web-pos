@@ -77,7 +77,6 @@ module.exports = function(app) {
         req.session.total += 1;
         req.session.cart = cart;
         res.redirect('/Shop_cat');
-
     });
 
     app.get('/Shop_cat', function (req, res) {
@@ -117,13 +116,43 @@ module.exports = function(app) {
             res.render('Background/admin', {
                 products: product,
                 title: "商品信息管理"
+               // Data:data
             });
+        });
+    });
+
+    app.get('/add_num',function(req,res) {
+       var name=req.query.name;
+       var num=req.query.number;
+       num =parseInt(num)+1;
+       Shop.update(name,num,function (err) {
+            if (err) {
+                req.flash('error', err);
+            }
+            res.redirect('/admin');
+       });
+    });
+
+    app.get('/less_num',function(req,res) {
+        var name=req.query.name;
+        var num=req.query.number;
+        if(num<=0) {
+           num=0;
+        }else{
+           num = parseInt(num) - 1;
+        }
+        Shop.update(name,num,function (err) {
+            if (err) {
+                req.flash('error', err);
+            }
+            res.redirect('/admin');
         });
     });
 
    app.get('/add_product',function(req,res) {
        res.render('Background/add_product', {
-            title:"添加商品"
+            title:"添加商品",
+    //        properties:property
         })
    });
    app.post('/add_product',function(req,res){
@@ -137,20 +166,39 @@ module.exports = function(app) {
            unit:unit,
            num:num
        });
-       shop.save(function(err){
-           if(err){
-               req.flash('error',err);
-               res.redirect('/add_product');
-           }
-           req.flash('success',"商品录入成功");
-           res.redirect('/admin');
-       });
+       if(shop.num<=0){
+           req.flash('failure',"请确认商品数目");
+           res.redirect('/add_product');
+       }else {
+           shop.save(function (err) {
+               if (err) {
+                   req.flash('error', err);
+                   res.redirect('/add_product');
+               }
+               req.flash('success', "商品保存成功");
+               res.redirect('/admin');
+           });
+       }
     });
-
-   app.get('/addProperties',function(req,res){
-       res.render('Background/add_product', {
-           title:"添加商品"
+   app.get('/delete',function(req,res) {
+            Shop.remove(function(err){
+                if(err){
+                   req.flash('error', err);
+                   res.redirect('/admin');
+                }
+                req.flash('success', "商品删除成功");
+                res.redirect('/admin');
+            });
+            res.redirect('/admin');
+   });
+   app.get('/add_properties',function(req,res){
+       res.render('Background/add_properties', {
+           title:"添加属性"
        })
+   });
+   app.post('add_properties',function(req,res){
+       var name=req.body.name;
+       var value=req.body.value;
    })
 
 };

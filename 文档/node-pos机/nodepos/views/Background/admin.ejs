@@ -1,4 +1,5 @@
 <%- include header%>
+<script src="javascripts/viewStage/admin.js"></script>
     <div class="col-md-12 shopManage">
         <p>商品信息管理</p>
         <a type="button" class="btn btn-primary" href="/add_product">添加商品</a>
@@ -20,18 +21,18 @@
                 <td>
                     <form method="post">
                         <div class="btn-group">
-                            <button type="button" class="btn btn-default">-</button>
-                            <input type="text" class="btn btn-default shopNum disabled" name="num" placeholder="<%= product.num %>">
-                            <button type="button" class="btn btn-default">+</button>
+                             <a class="btn btn-default" href="/less_num?name=<%= product.name %>&number=<%= product.num %>">-</a>
+                             <input type="text" class="btn btn-default shopNum" name="num" placeholder="<%= product.num %>">
+                             <a class="btn btn-default"  href="/add_num?name=<%= product.name %>&number=<%= product.num %>">+</a>
                         </div>
                     </form>
                 </td>
                 <td><%= product.price %></td>
                 <td><%= product.unit %></td>
-                <td>0</td>
+                <td>2014-09-24</td>
                 <td>
-                    <a href="/shopInfo">详情</a>
-                    <a href="/deleteShop">删除</a>
+                    <a href="/information">详情</a>
+                    <a href="/delete?name=<%= product.name %>" onclick="return get_status()">删除</a>
                 </td>
             </tr>
             <% }) %>

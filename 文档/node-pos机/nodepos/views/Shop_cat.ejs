@@ -21,7 +21,8 @@
                         <td><%= product.name %></td>
                         <td><%= product.price %></td>
                         <td><%= product.unit %></td>
-                        <td><div class="btn-group">
+                        <td>
+                            <div class="btn-group">
                             <a type="button" class="btn btn-default" href="/less?name=<%= product.name %>">-</a>
                             <a type="button" class="btn btn-default disabled"><%= product.num %></a>
                             <a type="button" class="btn btn-default" href="/add?name=<%= product.name %>">+</a>

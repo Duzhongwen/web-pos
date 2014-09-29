@@ -67,9 +67,6 @@ shopManage
     padding:10px 10px 0 10px;
 }
 
-.shopManage .table a{
-    margin:0 10px 0 0;
-}
 
 .shopManage .table a:hover{
     color:#00f;

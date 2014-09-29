@@ -7,7 +7,7 @@ function Product(product) {
   this.unit = product.unit;
   this.num=product.num;
   this.discounts=product.discounts;
-};
+}
 
 module.exports = Product;
 
@@ -60,7 +60,6 @@ Product.get = function(callback) {
         mongodb.close();
         return callback(err);//错误，返回 err 信息
       }
-      //查找用户名（name键）值为 name 一个文档
       collection.find({}).sort({time:-1}).toArray(function (err, product) {
         mongodb.close();
         if (err) {
@@ -70,4 +69,66 @@ Product.get = function(callback) {
       });
     });
   });
+};
+
+Product.insert=function(){
+    mongodb.open(function (err, db) {
+        if (err) {
+            return callback(err);
+        }
+        db.collection('products', function (err, collection) {
+            if (err) {
+                mongodb.close();
+                return callback(err);//错误，返回 err 信息
+            }
+        })
+    })
+};
+
+Product.remove=function(name,callback){
+    mongodb.open(function (err, db) {
+        if (err) {
+            return callback(err);
+        }
+        db.collection('products', function (err, collection) {
+            if (err) {
+                mongodb.close();
+                return callback(err);//错误，返回 err 信息
+            }
+            collection.remove({
+                "name": name
+            }, function (err) {
+                mongodb.close();
+                if (err) {
+                    return callback(err);
+                }
+                callback(null);
+            });
+        })
+    })
+};
+
+Product.update=function(name,num,callback){
+    mongodb.open(function (err, db) {
+        if (err) {
+            return callback(err);//错误，返回 err 信息
+        }
+        db.collection('products', function (err, collection) {
+            if (err) {
+                mongodb.close();
+                return callback(err);//错误，返回 err 信息
+            }
+            collection.update({
+                "name": name
+            }, {
+                $set: {num: num}
+            }, function (err) {
+                mongodb.close();
+                if (err) {
+                    return callback(err);
+                }
+                callback(null);
+            })
+        });
+    });
 };
