@@ -1,27 +1,32 @@
 var mongodb = require('./db');
 
 function Product(product) {
-  this.kind = product.kind;
+ // this.kind = product.kind;
   this.name = product.name;
   this.price = product.price;
   this.unit = product.unit;
   this.num=product.num;
-  this.discounts=product.discounts;
+  //this.discounts=product.discounts;
 }
 
 module.exports = Product;
 
 //存储用户信息
-Product.prototype.save = function(callback) {
+Product.prototype.save = function(property,callback) {
   //要存入数据库的用户文档
   var product = { //创建商品数据对象
-      kind: this.kind,
+   //   kind: this.kind,
       name: this.name,
       price: this.price,
       unit: this.unit,
-      num:this.num,
-      discounts: this.discounts
+      num: this.num
+      //discounts: this.discounts
   };
+    if(property.length !=0){
+        for (value in property){
+            product[value] = property[value];
+        }
+    }
   //打开数据库
   mongodb.open(function (err, db) {
     if (err) {
@@ -38,7 +43,7 @@ Product.prototype.save = function(callback) {
         safe: true
       }, function (err) {
         mongodb.close();
-  if (err) {
+    if (err) {
           return callback(err);//错误，返回 err 信息
         }
         callback(null);//成功！err 为null
@@ -71,7 +76,7 @@ Product.get = function(callback) {
   });
 };
 
-Product.insert=function(){
+Product.insert=function(name,value,callback){
     mongodb.open(function (err, db) {
         if (err) {
             return callback(err);
@@ -81,6 +86,16 @@ Product.insert=function(){
                 mongodb.close();
                 return callback(err);//错误，返回 err 信息
             }
+            collection.update({}, {
+                    $insert: {name: value}
+                },
+                function (err) {
+                mongodb.close();
+                if (err) {
+                    return callback(err);
+                }
+                callback(null);
+            })
         })
     })
 };
@@ -97,7 +112,9 @@ Product.remove=function(name,callback){
             }
             collection.remove({
                 "name": name
-            }, function (err) {
+            }, {
+                w:1
+            },function (err) {
                 mongodb.close();
                 if (err) {
                     return callback(err);

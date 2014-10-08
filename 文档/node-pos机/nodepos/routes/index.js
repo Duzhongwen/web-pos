@@ -109,6 +109,9 @@ module.exports = function(app) {
         res.redirect('/Product_list');
     });
     app.get('/admin', function (req, res) {
+        if(!req.session.property){
+            req.session.property=[];
+        }
         Shop.get(function (err, product) {
             if(err){
                 product=[];
@@ -152,25 +155,32 @@ module.exports = function(app) {
    app.get('/add_product',function(req,res) {
        res.render('Background/add_product', {
             title:"添加商品",
-    //        properties:property
-        })
+            properties:req.session.property
+       })
    });
    app.post('/add_product',function(req,res){
        var name=req.body.name,
            price=req.body.price,
            unit=req.body.unit,
-           num=req.body.num;
+           num=req.body.num,
+           properties=req.session.property;
        var shop = new Shop({
            name:name,
            price:price,
            unit:unit,
            num:num
        });
+       var added_property = {};
+       if(properties.length !=0){
+           properties.forEach(function(value){
+               added_property[value.name] = req.body[value.name];
+           });
+       }
        if(shop.num<=0){
            req.flash('failure',"请确认商品数目");
            res.redirect('/add_product');
        }else {
-           shop.save(function (err) {
+           shop.save(added_property,function (err) {
                if (err) {
                    req.flash('error', err);
                    res.redirect('/add_product');
@@ -181,7 +191,8 @@ module.exports = function(app) {
        }
     });
    app.get('/delete',function(req,res) {
-            Shop.remove(function(err){
+       var name=req.query.name;
+            Shop.remove(name,function(err){
                 if(err){
                    req.flash('error', err);
                    res.redirect('/admin');
@@ -196,9 +207,14 @@ module.exports = function(app) {
            title:"添加属性"
        })
    });
-   app.post('add_properties',function(req,res){
+   app.post('/add_properties',function(req,res){
        var name=req.body.name;
        var value=req.body.value;
+       var properties=req.session.property;
+       var property={ name:name,
+                      value:value };
+       properties.push(property);
+       req.session.property = properties;
+       res.redirect('/add_product');
    })
-
 };

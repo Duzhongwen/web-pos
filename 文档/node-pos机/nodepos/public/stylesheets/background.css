@@ -59,14 +59,10 @@ header
 /*
 shopManage
 */
-.shopManage p,.shopManage a{
-    margin-bottom:20px;
-}
 
 .shopManage{
     padding:10px 10px 0 10px;
 }
-
 
 .shopManage .table a:hover{
     color:#00f;

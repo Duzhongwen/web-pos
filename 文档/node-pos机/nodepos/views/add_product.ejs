@@ -35,7 +35,7 @@
                         <label for="inputEmail3" class="col-sm-2 control-label">商品数量: </label>
                         <div class="btn-group">
                             <button type="button" class="btn btn-default">-</button>
-                            <input type="text" class="btn btn-default" name="num" size>
+                            <input type="text" class="btn btn-default" name="num" size="10">
                             <button type="button" class="btn btn-default">+</button>
                         </div>
                     </div>
@@ -45,18 +45,6 @@
                             <input type="text" class="form-control" name="unit" placeholder="请输入单位">
                         </div>
                     </div>
-                </div>
-                <div class="col-xs-6 col-md-6">
-                    <tr>
-                        <% try{%>
-                        <% properties.forEach(function(property,index){ %>
-                        <label for="inputEmail3" class="col-sm-2 control-label"><%= property.name %>:</label>
-                        <div class="col-sm-4">
-                            <input type="text" name="<%= property.name %>" class="form-control"  value="<%= property.value %>">
-                        </div>
-                        <% if(index %2 ==0){%></tr><tr><% }%>
-                        <% })%><% }catch (err){}%>
-                    </tr>
                 </div>
             </div>
         </form>
