@@ -1,3 +1,35 @@
 <%- include header %>
+<div>
+    <a href="admin">商品管理</a>>><a href="add_product">添加商品</a>>>删除属性
+</div>
+<div class="mainBlock text-center">
+
+    <table class="table">
+        <tr>
+            <td>
+                属性名称
+            </td>
+            <td>
+                属性值
+            </td>
+            <td>
+                操作
+            </td>
+        </tr>
+
+            <% try{%>
+            <% property.forEach(function(properties,index){ %>
+        <tr>
+            <td><%= properties.name %></td>
+            <td><input type="text" class="disabled" name="<%= properties.name %>" size="20" value="<%= properties.value %>"> </td>
+            <td><a href="delete_properties?names=<%= properties.name %>">删除</a></td>
+        </tr>
+            <% })%><% }catch (err){}%>
+
+
+    </table>
+
+</div>
+
 
 <%- include footer %>

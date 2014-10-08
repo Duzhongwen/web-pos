@@ -189,6 +189,7 @@ module.exports = function(app) {
                res.redirect('/admin');
            });
        }
+       req.session.property=properties;
     });
    app.get('/delete',function(req,res) {
        var name=req.query.name;
@@ -215,6 +216,20 @@ module.exports = function(app) {
                       value:value };
        properties.push(property);
        req.session.property = properties;
+       res.redirect('/add_product');
+   });
+   app.get('/delete_property',function(req,res){
+       res.render('Background/delete_property',{
+           title:"删除属性",
+           property:req.session.property
+       })
+   });
+   app.get('/delete_properties',function(req,res){
+       var property_name = req.query.names;
+       var property = req.session.property;
+       var properties = _.indexOf(property,_.findWhere(property,{'name':property_name}));
+       property.splice(properties,1);
+       req.session.property=property;
        res.redirect('/add_product');
    })
 };
