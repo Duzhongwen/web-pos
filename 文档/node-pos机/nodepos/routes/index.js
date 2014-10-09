@@ -239,10 +239,25 @@ module.exports = function(app) {
                 product = [];
             }
             var products = _.findWhere(product,{name:product_name});
+            req.session.products = product_name;
             res.render('Background/detail_product',{
                 title: "商品详情",
                 this_product: products
             })
         });
     });
+    app.get('/delete_product_property',function(req,res) {
+        var product_name = req.session.products;
+        Shop.get(function (err, product) {
+            if (err) {
+                product = [];
+            }
+            var products = _.findWhere(product, {name: product_name});
+            res.render('Background/delete_product_property', {
+                title: "商品详情",
+                product_name: product_name,
+                this_product:products
+            })
+        })
+    })
 };
