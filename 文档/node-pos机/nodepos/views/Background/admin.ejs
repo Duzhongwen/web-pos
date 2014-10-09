@@ -31,7 +31,7 @@
                 <td><%= product.unit %></td>
                 <td>2014-09-24</td>
                 <td>
-                    <a href="/information">详情</a>
+                    <a href="/detail_product?name=<%= product.name %>">详情</a>
                     <a href="/delete?name=<%= product.name %>" onclick="return get_status()">删除</a>
                 </td>
             </tr>

@@ -1,0 +1,27 @@
+<%- include header %>
+<div>
+    <a href="admin">商品管理</a>>><a href="product_detail"><%= product_name%>>></a>删除属性
+</div>
+<div class="mainBlock text-center">
+    <table class="table">
+        <tr>
+            <td>
+                属性名称
+            </td>
+            <td>
+                属性值
+            </td>
+            <td>
+                操作
+            </td>
+        </tr>
+        <tr>
+            <% var sum = 0;for (value in this_product){
+                    if(sum !=0){%>
+            <td><%= value%></td><td><%= this_product[value] %></td><td><% if(sum > 6){%><a href="delete_this_property?name=<%= value%>&product_name=<%= product_name%>">删除</a><%}%></td>
+            </tr><tr>
+            <% }sum +=1}%>
+        </tr>
+    </table>
+</div>
+<%- include footer %>

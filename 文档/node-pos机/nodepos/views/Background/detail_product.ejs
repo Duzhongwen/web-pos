@@ -1,0 +1,29 @@
+<%- include header %>
+<div class="col-xs-12 col-md-12 addShop">
+
+    <div class="col-xs-1 col-md-2"></div>
+    <div class="col-xs-12 col-md-10 shopForm">
+        <form class="form-inline" role="form" method="post">
+            <div class="row">
+                <div class="col-md-12 btnBar">
+                    <div class="row">
+                        <div class="col-xs-3 col-md-3"><button type="submit" class="btn btn-primary">保存商品</button></div>
+                        <div class="col-xs-3 col-md-3"><a href="/add_properties" class="btn btn-primary">添加属性</a></div>
+                        <div class="col-xs-3 col-md-3"><a href="/delete_property" class="btn btn-primary">删除属性</a></div>
+                        <div class="col-xs-3 col-md-3"><button type="reset" class="btn btn-primary">取消</button></div>
+                    </div>
+                </div>
+            </div>
+
+            <table class="table">
+              <tr>
+                <% var sum =0;for (value in this_product){%>
+                <td><%= value%></td><td><input type="text" name="<%= value%>" size="20" value="<%= this_product[value] %>"> </td>
+                <% if(sum %2 ==0){%></tr><tr>
+                <% }sum +=1}%>
+                </tr>
+            </table>
+        </form>
+    </div>
+    </div>
+<%- include footer %>
