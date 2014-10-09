@@ -214,7 +214,7 @@ module.exports = function(app) {
         var properties = req.session.property;
         var property = { name: name,
             value: value };
-        properties.push(property);
+        properties.unshift(property);
         req.session.property = properties;
         res.redirect('/add_product');
     });
@@ -253,10 +253,12 @@ module.exports = function(app) {
                 product = [];
             }
             var products = _.findWhere(product, {name: product_name});
+            var length=_.size(products);
             res.render('Background/delete_product_property', {
                 title: "商品详情",
                 product_name: product_name,
-                this_product:products
+                this_product:products,
+                length:length
             })
         })
     })
