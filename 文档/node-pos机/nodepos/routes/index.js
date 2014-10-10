@@ -246,9 +246,25 @@ module.exports = function(app) {
             })
         });
     });
-//    app.post('/detail_product',function(req,res){
-//        var name = req.body.name
-//    });
+    app.post('/detail_product',function(req,res) {
+        var property = req.body;
+        Shop.get(function (err, product) {
+            if (err) {
+                product = [];
+            }
+            var product_name = req.session.products;
+            var products = _.findWhere(product, {name: product_name});
+            delete property._id;
+            console.log(products.name);
+            Shop.updata_product_property(products._id, property, function (err) {
+                if (err) {
+                    console.log('=======================',err);
+                    return res.redirect('/detail_product');
+                }
+                res.redirect('/admin');
+            })
+        });
+    });
     app.get('/delete_product_property',function(req,res) {
         var product_name = req.session.products;
         Shop.get(function (err, product) {
@@ -275,16 +291,18 @@ module.exports = function(app) {
             var products = _.findWhere(product, {name: product_name});
             console.log(products);
             var shop= _.omit(products,value);
-            Shop.delete_product_property(product_name,shop,function(err,product){
+            console.log(shop);
+            console.log(product_name);
+            Shop.updata_product_property(product_name,shop,function(err){
                 if(err){
                     return res.redirect('/delete_product_property');
                 }
-                res.redirect('/detail_product');
+                res.redirect('/admin');
             })
         })
     });
-//    app.get('/add_product_properties',function(req,res){
-//        var product_name = req.session.products;
-//    })
+//  app.get('/add_product_properties',function(req,res){
+//      var product_name = req.session.products;
+//  })
 
 };
