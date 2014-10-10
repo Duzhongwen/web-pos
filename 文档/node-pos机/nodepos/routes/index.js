@@ -170,17 +170,17 @@ module.exports = function(app) {
             unit: unit,
             num: num
         });
-        var added_property = {};
+        var add_property = {};
         if (properties.length != 0) {
             properties.forEach(function (value) {
-                added_property[value.name] = req.body[value.name];
+                add_property[value.name] = req.body[value.name];
             });
         }
         if (shop.num <= 0) {
             req.flash('failure', "请确认商品数目");
             res.redirect('/add_product');
         } else {
-            shop.save(added_property, function (err) {
+            shop.save(add_property, function (err) {
                 if (err) {
                     req.flash('error', err);
                     res.redirect('/add_product');
@@ -246,6 +246,9 @@ module.exports = function(app) {
             })
         });
     });
+//    app.post('/detail_product',function(req,res){
+//        var name = req.body.name
+//    });
     app.get('/delete_product_property',function(req,res) {
         var product_name = req.session.products;
         Shop.get(function (err, product) {
@@ -261,5 +264,27 @@ module.exports = function(app) {
                 length:length
             })
         })
-    })
+    });
+    app.get('/delete_shop_property',function(req,res) {
+        var value = req.query.name,
+            product_name = req.query.product_name;
+        Shop.get(function (err, product) {
+            if (err) {
+                product = [];
+            }
+            var products = _.findWhere(product, {name: product_name});
+            console.log(products);
+            var shop= _.omit(products,value);
+            Shop.delete_product_property(product_name,shop,function(err,product){
+                if(err){
+                    return res.redirect('/delete_product_property');
+                }
+                res.redirect('/detail_product');
+            })
+        })
+    });
+//    app.get('/add_product_properties',function(req,res){
+//        var product_name = req.session.products;
+//    })
+
 };

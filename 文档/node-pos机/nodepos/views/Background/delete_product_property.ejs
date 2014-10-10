@@ -19,7 +19,7 @@
             <% var sum = 0;for (value in this_product){ if(sum > 3 && sum != length-1){%>
             <td><%= value %></td>
             <td><%= this_product[value] %></td>
-            <td><a href="delete_this_property?name=<%= value%>&product_name=<%= product_name%>">删除</a></td>
+            <td><a href="delete_shop_property?name=<%= value%>&product_name=<%= product_name%>">删除</a></td>
             </tr><tr>
             <% }sum +=1} %>
         </tr>

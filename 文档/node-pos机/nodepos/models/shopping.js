@@ -76,7 +76,7 @@ Product.get = function(callback) {
   });
 };
 
-Product.insert=function(name,value,callback){
+Product.insert = function(name,value,callback){
     mongodb.open(function (err, db) {
         if (err) {
             return callback(err);
@@ -100,7 +100,7 @@ Product.insert=function(name,value,callback){
     })
 };
 
-Product.remove=function(name,callback){
+Product.remove = function(name,callback){
     mongodb.open(function (err, db) {
         if (err) {
             return callback(err);
@@ -125,7 +125,7 @@ Product.remove=function(name,callback){
     })
 };
 
-Product.update=function(name,num,callback){
+Product.update = function(name,num,callback){
     mongodb.open(function (err, db) {
         if (err) {
             return callback(err);//错误，返回 err 信息
@@ -148,4 +148,27 @@ Product.update=function(name,num,callback){
             })
         });
     });
+};
+
+Product.delete_product_property = function(name,products,callback){
+    mongodb.open(function (err, db) {
+        if (err) {
+            return callback(err);//错误，返回 err 信息
+        }
+        db.collection('products', function (err, collection) {
+            if (err) {
+                mongodb.close();
+                return callback(err);//错误，返回 err 信息
+            }
+            collection.update({
+                "name": name
+            }, products, function (err) {
+                mongodb.close();
+                if (err) {
+                    return callback(err);
+                }
+                callback(null);
+            })
+        })
+    })
 };
