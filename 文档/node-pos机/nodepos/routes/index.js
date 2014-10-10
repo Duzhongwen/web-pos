@@ -153,9 +153,13 @@ module.exports = function(app) {
     });
 
     app.get('/add_product', function (req, res) {
+        if(!req.session.number){
+            req.session.number=0;
+        }
         res.render('Background/add_product', {
             title: "添加商品",
-            properties: req.session.property
+            properties: req.session.property,
+            product_num:req.session.number
         })
     });
     app.post('/add_product', function (req, res) {
@@ -170,6 +174,7 @@ module.exports = function(app) {
             unit: unit,
             num: num
         });
+        req.session.number=shop.num;
         var add_property = {};
         if (properties.length != 0) {
             properties.forEach(function (value) {
@@ -190,6 +195,22 @@ module.exports = function(app) {
             });
         }
         req.session.property = properties;
+    });
+    app.get('/lower_shop_number',function(req,res) {
+        var number= req.session.number;
+        number -= 1;
+        if(number<=0) {
+            number = 0;
+        }
+        req.session.number = number;
+        res.redirect('/add_product');
+    });
+    app.get('/add_shop_number',function(req,res) {
+        var number= req.session.number;
+        number = number+ 1;
+        req.session.number = number;
+        console.log(number);
+        res.redirect('/add_product');
     });
     app.get('/delete', function (req, res) {
         var name = req.query.name;
