@@ -239,10 +239,12 @@ module.exports = function(app) {
                 product = [];
             }
             var products = _.findWhere(product,{name:product_name});
+            var length=_.size(products);
             req.session.products = product_name;
             res.render('Background/detail_product',{
                 title: "商品详情",
-                this_product: products
+                this_product: products,
+                length:length
             })
         });
     });
@@ -289,10 +291,7 @@ module.exports = function(app) {
                 product = [];
             }
             var products = _.findWhere(product, {name: product_name});
-            console.log(products);
             var shop= _.omit(products,value);
-            console.log(shop);
-            console.log(product_name);
             Shop.updata_product_property(product_name,shop,function(err){
                 if(err){
                     return res.redirect('/delete_product_property');
