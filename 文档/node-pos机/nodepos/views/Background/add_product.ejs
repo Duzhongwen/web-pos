@@ -1,13 +1,12 @@
 <%- include header %>
 <div class="col-xs-12 col-md-12 addShop">
-
     <div class="col-xs-1 col-md-2"></div>
     <div class="col-xs-12 col-md-10 shopForm">
-        <form class="form-inline" role="form" method="post">
+        <form class="form-inline" name="product" role="form" method="post">
             <div class="row">
                 <div class="col-md-12 btnBar">
                     <div class="row">
-                        <div class="col-xs-3 col-md-3"><button type="submit" class="btn btn-primary">保存商品</button></div>
+                        <div class="col-xs-3 col-md-3"><button type="submit" onclick=" return display()" class="btn btn-primary">保存商品</button></div>
                         <div class="col-xs-3 col-md-3"><a href="/add_properties" class="btn btn-primary">添加属性</a></div>
                         <div class="col-xs-3 col-md-3"><a href="/delete_property" class="btn btn-primary">删除属性</a></div>
                         <div class="col-xs-3 col-md-3"><button type="reset" class="btn btn-primary">取消</button></div>
@@ -59,6 +58,19 @@
                     </div>
                 </div>
             </div>
+            <script>
+             function display(){
+               if(document.product.name.value == '' ||
+                  document.product.price.value == '' ||
+                  document.product.num.value == '' ||
+                  document.product.num.value == 0 ||
+                  document.product.unit.value == ''){
+                  alert("确认属性值是否存在问题！");
+                  return false;
+               }
+                document.product.submit();
+               }
+            </script>
         </form>
     </div>
 

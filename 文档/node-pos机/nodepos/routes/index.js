@@ -275,10 +275,12 @@ module.exports = function(app) {
             if (err) {
                 product = [];
             }
+            console.log(property);
             var product_name = req.session.products;
             var products = _.findWhere(product, {name: product_name});
-            delete property._id;
-            console.log(products.name);
+            //delete  property._id;
+            var _id='_id';
+            property[_id]=products._id;
             Shop.updata_product_property(products._id, property, function (err) {
                 if (err) {
                     console.log('=======================',err);
@@ -312,8 +314,9 @@ module.exports = function(app) {
                 product = [];
             }
             var products = _.findWhere(product, {name: product_name});
-            var shop= _.omit(products,value);
-            Shop.updata_product_property(product_name,shop,function(err){
+            var shop = _.omit(products,value);
+            console.log(shop);
+            Shop.updata_product_property(products._id,shop,function(err){
                 if(err){
                     return res.redirect('/delete_product_property');
                 }
