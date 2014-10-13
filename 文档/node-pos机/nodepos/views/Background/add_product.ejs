@@ -15,49 +15,44 @@
             </div>
 
             <div class="row">
-                <div class="col-xs-6 col-md-6">
-                    <div class="form-group">
-                        <label for="inputEmail3" class="col-sm-2 control-label">商品名称: </label>
-                        <div class="col-sm-4">
+            <table class="table">
+                <tr >
+                      <td><label for="inputEmail3" class="col-sm-2 control-label">商品名称: </label></td>
+                      <td>
                             <input type="text" class="form-control" name="name"  autofocus="true">
-                        </div>
-                    </div>
-                    <div class="form-group">
-                        <label for="inputEmail3" class="col-sm-2 control-label">单价(元): </label>
-                        <div class="col-sm-4">
+                      </td>
+
+                      <td><label for="inputEmail3" class="col-sm-2 control-label">商品数量: </label></td>
+                      <td>
+                      <div class="btn-group">
+                      <a  class="btn btn-default" href="/lower_shop_number">-</a>
+                      <input type="text" class="btn btn-default" name="num" value="<%= product_num %>" size="2">
+                      <a  href="/add_shop_number"" class="btn btn-default">+</a>
+                      </div>
+                      </td>
+                </tr>
+                <tr >
+                       <td><label for="inputEmail3" class="col-sm-2 control-label">单价(元): </label></td>
+                       <td>
                             <input type="text" class="form-control" name="price" >
-                        </div>
-                    </div>
-                </div>
-                <div class="col-xs-6 col-md-6">
-                    <div class="form-group">
-                        <label for="inputEmail3" class="col-sm-2 control-label">商品数量: </label>
-                       <div class="btn-group">
-                         <a  class="btn btn-default" href="/lower_shop_number">-</a>
-                         <input type="text" class="btn btn-default" name="num" value="<%= product_num %>" size="2">
-                         <a  href="/add_shop_number"" class="btn btn-default">+</a>
-                       </div>
-                    </div>
-                    <div class="form-group">
-                        <label for="inputEmail3" class="col-sm-2 control-label">单位: </label>
-                        <div class="col-sm-4">
+                       </td>
+
+                       <td><label for="inputEmail3" class="col-sm-2 control-label">单位: </label></td>
+                       <td>
                             <input type="text" class="form-control" name="unit" >
-                        </div>
-                    </div>
-                </div>
-                <div class="col-xs-6 col-md-6">
-                    <div class="form-group">
-                        <% try{%>
-                        <% properties.forEach(function(property,index){ %>
-                        <label for="inputEmail3" class="col-sm-2 control-label"><%= property.name %>:</label>
-                        <div class="col-sm-4">
+                       </td>
+                </tr>
+                <tr >
+                       <% try{%>
+                       <% properties.forEach(function(property,index){ %>
+                       <td><label for="inputEmail3" class="col-sm-2 control-label"><%= property.name %>:</label></td>
+                       <td>
                             <input type="text" name="<%= property.name %>" class="form-control"  value="<%= property.value %>">
-                        </div>
-                        <% if(index %2 ==0){%></div><div class="form-group"><% }%>
-                        <% })%><% }catch (err){}%>
-                    </div>
-                </div>
-            </div>
+                       </td>
+                       <% if(index %2!=0 ){%></tr><tr><% }%>
+                       <% })%><% }catch (err){}%>
+                       </tr>
+            </table>
             <script>
              function display(){
                if(document.product.name.value == '' ||
@@ -69,10 +64,18 @@
                   return false;
                }
                 document.product.submit();
-               }
+             }
+             function check_input(){
+                  var submit=document.getElementById("submit");
+                  if(document.product.name.value ==""||document.product.num.value ==""||document.product.unit.value ==""||document.product.price.value ==""){
+                  submit.disabled = true;
+                  }
+                  else{
+                  submit.disabled = false;
+                  }
+             }
             </script>
         </form>
     </div>
-
 </div>
 <%- include footer %>

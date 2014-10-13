@@ -65,8 +65,8 @@ Product.get = function(callback) {
         mongodb.close();
         return callback(err);//错误，返回 err 信息
       }
-      collection.find().sort({
-          time: -1
+      collection.find({}).sort({
+          time: 1
       }).toArray(function (err, product) {
         mongodb.close();
         if (err) {
@@ -181,7 +181,7 @@ Product.getTen = function(page,callback){
         if(err){
             return callback(err);
         }
-        //读取shops集合
+        //读取products集合
         db.collection('products',function(err,collection){
             if(err){
                 mongodb.close();
@@ -198,7 +198,7 @@ Product.getTen = function(page,callback){
                     skip: (page - 1)*10,
                     limit: 10
                 }).sort({
-                    time: -1
+                    time: 1
                 }).toArray(function(err,shops){
                     mongodb.close();
                     if(err){
