@@ -112,14 +112,26 @@ module.exports = function(app) {
         if (!req.session.property) {
             req.session.property = [];
         }
+        var page = req.query.p ? parseInt(req.query.p) : 1;
         Shop.get(function (err, product) {
             if (err) {
                 product = [];
             }
-            res.render('Background/admin', {
-                products: product,
-                title: "商品信息管理"
-                // Data:data
+            Shop.getTen(page,function(err,product,total) {
+                if (err) {
+                    req.flash('error', err);
+                    return res.redirect('/admin');
+                }
+                res.render('Background/admin', {
+                    products: product,
+                    title: "商品信息管理",
+                    page: page,
+                    isFirstPage: (page - 1) == 0,
+                    isLastPage: ((page - 1)*10 + product.length) == total,
+                    success: req.flash('success').toString(),
+                    error: req.flash('error').toString()
+                    // Data:data
+                });
             });
         });
     });
@@ -153,12 +165,16 @@ module.exports = function(app) {
     });
 
     app.get('/add_product', function (req, res) {
+//        if(!req.session.shop){
+//            req.session.shop=['','',''];
+//        }
         if(!req.session.number){
             req.session.number=0;
         }
         res.render('Background/add_product', {
             title: "添加商品",
             properties: req.session.property,
+           // shop:req.session.shop,
             product_num:req.session.number
         })
     });
@@ -168,6 +184,10 @@ module.exports = function(app) {
             unit = req.body.unit,
             num = req.body.num,
             properties = req.session.property;
+//        var shops={name:name,
+//                   price:price,
+//                   unit:unit };
+//        req.session.shop=shops;
         var shop = new Shop({
             name: name,
             price: price,
@@ -190,6 +210,8 @@ module.exports = function(app) {
                     req.flash('error', err);
                     res.redirect('/add_product');
                 }
+               // req.session.shop=[];
+                req.session.number=0;
                 req.flash('success', "商品保存成功");
                 res.redirect('/admin');
             });
@@ -209,7 +231,6 @@ module.exports = function(app) {
         var number= req.session.number;
         number = number+ 1;
         req.session.number = number;
-        console.log(number);
         res.redirect('/add_product');
     });
     app.get('/delete', function (req, res) {
