@@ -112,6 +112,9 @@ module.exports = function(app) {
         if (!req.session.property) {
             req.session.property = [];
         }
+        if(!req.session.p){
+            req.session.p = [];
+        }
         var page = req.query.p ? parseInt(req.query.p) : 1;
         Shop.get(function (err, product) {
             if (err) {
@@ -276,6 +279,7 @@ module.exports = function(app) {
     });
     app.get('/detail_product', function (req, res) {
         var product_name = req.query.name;
+        var property=req.session.p;
         Shop.get(function (err, product) {
             if (err) {
                 product = [];
@@ -286,7 +290,8 @@ module.exports = function(app) {
             res.render('Background/detail_product',{
                 title: "商品详情",
                 this_product: products,
-                length:length
+                length:length,
+                property:property
             })
         });
     });
@@ -304,7 +309,6 @@ module.exports = function(app) {
             property[_id]=products._id;
             Shop.updata_product_property(products._id, property, function (err) {
                 if (err) {
-                    console.log('=======================',err);
                     return res.redirect('/detail_product');
                 }
                 res.redirect('/admin');
@@ -327,6 +331,33 @@ module.exports = function(app) {
             })
         })
     });
+    app.get('/add_product_properties',function(req,res) {
+        var product_name = req.session.products;
+        res.render('Background/add_product_properties', {
+            product_name: product_name,
+            title: "添加属性"
+        })
+    });
+    app.post('/add_product_properties',function(req,res){
+        var name = req.body.name;
+        console.log(name+'-------------------------------');
+        var value = req.body.value;
+        var product_name = req.session.products;
+        Shop.get(function (err, product) {
+            if (err) {
+                product = [];
+            }
+            var products = _.findWhere(product, {name: product_name});
+            products[name]=value;
+            Shop.updata_product_property(products._id,products,function (err) {
+                if(err){
+                    console.log(err);
+                    return res.redirect('/add_product_property');
+                }
+                res.redirect('/admin');
+            });
+        })
+    });
     app.get('/delete_shop_property',function(req,res) {
         var value = req.query.name,
             product_name = req.query.product_name;
@@ -345,8 +376,4 @@ module.exports = function(app) {
             })
         })
     });
-//  app.get('/add_product_properties',function(req,res){
-//      var product_name = req.session.products;
-//  })
-
 };
