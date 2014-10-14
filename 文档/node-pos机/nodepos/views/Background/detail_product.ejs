@@ -22,9 +22,11 @@
             <table class="table">
               <tr>
                 <% var sum =0;for (value in this_product){ if(sum != length-1 ){%>
-                <td><%= value%></td>
-                <td><input type="text" name="<%= value%>" size="20" value="<%= this_product[value] %>"> </td>
-                <% if(sum %2 ==0){%></tr><tr>
+                <td><label for="inputEmail3" class="col-sm-2 control-label"><%= value%>:<label></td>
+                <td><div class="col-sm-4">
+                <input type="text" class="form-control" name="<%= value%>" size="20" value="<%= this_product[value] %>">
+                </div></td>
+                <% if(sum %2 !=0){%></tr><tr>
                 <% }sum +=1} }%>
                 </tr>
             </table>

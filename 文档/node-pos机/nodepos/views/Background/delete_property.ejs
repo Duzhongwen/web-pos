@@ -16,12 +16,11 @@
                 操作
             </td>
         </tr>
-
             <% try{%>
             <% property.forEach(function(properties,index){ %>
         <tr>
             <td><%= properties.name %></td>
-            <td><input type="text" class="disabled" name="<%= properties.name %>" size="20" value="<%= properties.value %>"> </td>
+            <td><%= properties.value %></td>
             <td><a href="delete_properties?names=<%= properties.name %>">删除</a></td>
         </tr>
             <% })%><% }catch (err){}%>
