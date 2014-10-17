@@ -17,22 +17,22 @@
             <% var count = 1; products.forEach(function(product,index){ %>
             <tr>
                 <td><%= count++ %></td>
-                <td><%= product.name %></td>
+                <td><%= product.商品名称 %></td>
                 <td>
                     <form method="post">
                         <div class="btn-group">
-                             <a class="btn btn-default" href="/less_num?name=<%= product.name %>&number=<%= product.num %>">-</a>
-                             <input type="text" class="btn btn-default shopNum" name="num" placeholder="<%= product.num %>">
-                             <a class="btn btn-default"  href="/add_num?name=<%= product.name %>&number=<%= product.num %>">+</a>
+                             <a class="btn btn-default" href="/less_num?name=<%= product.商品名称 %>&number=<%= product.数量 %>">-</a>
+                             <input type="text" class="btn btn-default" size="1" name="num" placeholder="<%= product.数量 %>">
+                             <a class="btn btn-default"  href="/add_num?name=<%= product.商品名称 %>&number=<%= product.数量 %>">+</a>
                         </div>
                     </form>
                 </td>
-                <td><%= product.price %></td>
-                <td><%= product.unit %></td>
+                <td><%= product.价格 %></td>
+                <td><%= product.单位 %></td>
                 <td>2014-09-24</td>
                 <td>
-                    <a href="/detail_product?name=<%= product.name %>">详情</a>
-                    <a href="/delete?name=<%= product.name %>" onclick="return get_status()">删除</a>
+                    <a href="/detail_product?name=<%= product.商品名称 %>">详情</a>
+                    <a href="/delete?name=<%= product.商品名称 %>" onclick="return get_status()">删除</a>
                 </td>
             </tr>
             <% }) %>

@@ -6,7 +6,7 @@
             <div class="row">
                 <div class="col-md-12 btnBar">
                     <div class="row">
-                        <div class="col-xs-3 col-md-3"><button type="submit" onclick=" return display()" class="btn btn-primary">保存商品</button></div>
+                        <div class="col-xs-3 col-md-3"><button type="submit" onclick=" return display()" class="btn btn-primary" id="submit" disabled="true">保存商品</button></div>
                         <div class="col-xs-3 col-md-3"><a href="/add_properties" class="btn btn-primary">添加属性</a></div>
                         <div class="col-xs-3 col-md-3"><a href="/delete_property" class="btn btn-primary">删除属性</a></div>
                         <div class="col-xs-3 col-md-3"><button type="reset" class="btn btn-primary">取消</button></div>
@@ -26,7 +26,7 @@
                       <td>
                       <div class="btn-group">
                       <a  class="btn btn-default" href="/lower_shop_number">-</a>
-                      <input type="text" class="btn btn-default" name="num" value="<%= product_num %>" size="2">
+                      <input type="text" class="btn btn-default" name="num" value="<%= product_num %>" onchange="check_input()" size="2">
                       <a  href="/add_shop_number"" class="btn btn-default">+</a>
                       </div>
                       </td>
@@ -54,20 +54,9 @@
                        </tr>
             </table>
             <script>
-             function display(){
-               if(document.product.name.value == '' ||
-                  document.product.price.value == '' ||
-                  document.product.num.value == '' ||
-                  document.product.num.value == 0 ||
-                  document.product.unit.value == ''){
-                  alert("确认属性值是否存在问题！");
-                  return false;
-               }
-                document.product.submit();
-             }
              function check_input(){
                var submit=document.getElementById("submit");
-               if(document.product.name.value ==""||document.product.num.value ==""||document.product.unit.value ==""||document.product.price.value ==""){
+               if(document.product.name.value ==""||document.product.num.value ==""||document.product.num.value ==0||document.product.unit.value ==""||document.product.price.value ==""){
                submit.disabled = true;
                }
                else{

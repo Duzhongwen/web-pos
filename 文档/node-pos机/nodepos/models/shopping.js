@@ -16,10 +16,10 @@ Product.prototype.save = function(property,callback) {
   //要存入数据库的用户文档
   var product = { //创建商品数据对象
    //   kind: this.kind,
-      name: this.name,
-      price: this.price,
-      unit: this.unit,
-      num: this.num
+      商品名称: this.name,
+      价格: this.price,
+      单位: this.unit,
+      数量: this.num
       //discounts: this.discounts
   };
     if(property.length !=0){
@@ -102,7 +102,7 @@ Product.insert = function(name,value,callback){
     })
 };
 
-Product.remove = function(name,callback){
+Product.deletes= function(id,callback){
     mongodb.open(function (err, db) {
         if (err) {
             return callback(err);
@@ -113,7 +113,7 @@ Product.remove = function(name,callback){
                 return callback(err);//错误，返回 err 信息
             }
             collection.remove({
-                "name": name
+                "_id": id
             }, {
                 w:1
             },function (err) {
@@ -127,7 +127,7 @@ Product.remove = function(name,callback){
     })
 };
 
-Product.update = function(name,num,callback){
+Product.update = function(id,num,callback){
     mongodb.open(function (err, db) {
         if (err) {
             return callback(err);//错误，返回 err 信息
@@ -138,9 +138,9 @@ Product.update = function(name,num,callback){
                 return callback(err);//错误，返回 err 信息
             }
             collection.update({
-                "name": name
+                "_id": id
             }, {
-                $set: {num: num}
+                $set: {数量: num}
             }, function (err) {
                 mongodb.close();
                 if (err) {

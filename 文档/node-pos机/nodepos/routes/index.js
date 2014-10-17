@@ -133,7 +133,6 @@ module.exports = function(app) {
                     isLastPage: ((page - 1)*10 + product.length) == total,
                     success: req.flash('success').toString(),
                     error: req.flash('error').toString()
-                    // Data:data
                 });
             });
         });
@@ -143,11 +142,19 @@ module.exports = function(app) {
         var name = req.query.name;
         var num = req.query.number;
         num = parseInt(num) + 1;
-        Shop.update(name, num, function (err) {
+        Shop.get(function (err, product) {
             if (err) {
-                req.flash('error', err);
+                product = [];
             }
-            res.redirect('/admin');
+            var products=_.findWhere(product, {'商品名称': name});
+            console.log(products);
+            Shop.update(products._id, num, function (err) {
+                if (err) {
+                    console.log(err);
+                    req.flash('error', err);
+                }
+                res.redirect('/admin');
+            });
         });
     });
 
@@ -159,11 +166,18 @@ module.exports = function(app) {
         } else {
             num = parseInt(num) - 1;
         }
-        Shop.update(name, num, function (err) {
+        Shop.get(function (err, product) {
             if (err) {
-                req.flash('error', err);
+                product = [];
             }
-            res.redirect('/admin');
+            var products = _.findWhere(product, {'商品名称': name});
+            console.log(products);
+            Shop.update(products._id, num, function (err) {
+                if (err) {
+                    req.flash('error', err);
+                }
+                res.redirect('/admin');
+            });
         });
     });
 
@@ -238,15 +252,20 @@ module.exports = function(app) {
     });
     app.get('/delete', function (req, res) {
         var name = req.query.name;
-        Shop.remove(name, function (err) {
+        Shop.get(function (err, product) {
             if (err) {
-                req.flash('error', err);
-                res.redirect('/admin');
+                product = [];
             }
-            req.flash('success', "商品删除成功");
-            res.redirect('/admin');
+            var products = _.findWhere(product, {商品名称: name});
+            Shop.deletes(products._id, function (err) {
+                if (err) {
+                    req.flash('error', err);
+                    res.redirect('/admin');
+                }
+                req.flash('success', "商品删除成功");
+                res.redirect('/admin');
+            });
         });
-        res.redirect('/admin');
     });
     app.get('/add_properties', function (req, res) {
         res.render('Background/add_properties', {
@@ -258,7 +277,7 @@ module.exports = function(app) {
         var value = req.body.value;
         var properties = req.session.property;
         var property = { name: name,
-            value: value };
+                         value: value };
         properties.unshift(property);
         req.session.property = properties;
         res.redirect('/add_product');
@@ -278,13 +297,13 @@ module.exports = function(app) {
         res.redirect('/add_product');
     });
     app.get('/detail_product', function (req, res) {
-        var product_name = req.query.name;
+        var product_name = req.query.name||req.session.products;
         var property=req.session.p;
         Shop.get(function (err, product) {
             if (err) {
                 product = [];
             }
-            var products = _.findWhere(product,{name:product_name});
+            var products = _.findWhere(product,{商品名称:product_name});
             var length=_.size(products);
             req.session.products = product_name;
             res.render('Background/detail_product',{
@@ -301,9 +320,8 @@ module.exports = function(app) {
             if (err) {
                 product = [];
             }
-            console.log(property);
             var product_name = req.session.products;
-            var products = _.findWhere(product, {name: product_name});
+            var products = _.findWhere(product, {"商品名称": product_name});
             //delete  property._id;
             var _id='_id';
             property[_id]=products._id;
@@ -321,7 +339,8 @@ module.exports = function(app) {
             if (err) {
                 product = [];
             }
-            var products = _.findWhere(product, {name: product_name});
+            var products = _.findWhere(product, {"商品名称": product_name});
+            console.log(products);
             var length=_.size(products);
             res.render('Background/delete_product_property', {
                 title: "商品详情",
@@ -340,21 +359,20 @@ module.exports = function(app) {
     });
     app.post('/add_product_properties',function(req,res){
         var name = req.body.name;
-        console.log(name+'-------------------------------');
         var value = req.body.value;
         var product_name = req.session.products;
         Shop.get(function (err, product) {
             if (err) {
                 product = [];
             }
-            var products = _.findWhere(product, {name: product_name});
+            var products = _.findWhere(product, {"商品名称": product_name});
             products[name]=value;
             Shop.updata_product_property(products._id,products,function (err) {
                 if(err){
                     console.log(err);
-                    return res.redirect('/add_product_property');
+                    return res.redirect('/admin');
                 }
-                res.redirect('/admin');
+                res.redirect('/detail_product');
             });
         })
     });
@@ -365,14 +383,13 @@ module.exports = function(app) {
             if (err) {
                 product = [];
             }
-            var products = _.findWhere(product, {name: product_name});
+            var products = _.findWhere(product, {"商品名称": product_name});
             var shop = _.omit(products,value);
-            console.log(shop);
             Shop.updata_product_property(products._id,shop,function(err){
                 if(err){
-                    return res.redirect('/delete_product_property');
+                    return res.redirect('/admin');
                 }
-                res.redirect('/admin');
+                res.redirect('/detail_product');
             })
         })
     });

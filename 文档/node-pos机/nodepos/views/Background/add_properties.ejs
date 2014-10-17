@@ -10,7 +10,7 @@
                         <td><label for="inputEmail3" class="col-sm-2 control-label">属性名: </label></td>
                         <td>
                         <div class="col-sm-4">
-                            <input type="text" class="form-control" name="name" placeholder="请输入属性名称" autofocus="true">
+                            <input type="text" class="form-control" name="name" placeholder="请输入属性名称" autofocus="true" onchange="check_input()">
                         </div>
                         <td>
                     </tr>
@@ -18,25 +18,30 @@
                         <td><label for="inputEmail3" class="col-sm-2 control-label">属性值:</label></td>
                         <td>
                         <div class="col-sm-4">
-                            <input type="text" class="form-control" name="value" placeholder="请输入该属性值">
+                            <input type="text" class="form-control" name="value" placeholder="请输入该属性值" onchange="check_input()">
                         </div>
                         </td>
                     </tr>
 
                     <tr>
-                    <td><button type="submit" onclick="return jugement()" class="btn btn-primary">保存</button></td>
+                    <td><button type="submit" onclick="return jugement()" class="btn btn-primary" id="submit" disabled="true">保存</button></td>
                     <td><a href="/add_product" class="btn btn-primary">取消</a></td>
                     </tr>
                 </div>
            </table>
-    <script>
+        <script>
+        function check_input(){
+            var submit=document.getElementById("submit");
+            if(document.product.name.value ==""||document.product.value.value ==""){
+                submit.disabled = true;
+            }
+            else{
+                submit.disabled = false;
+            }
+        }
         function jugement(){
         if(document.product.name.value =='生产日期'){
-            if(document.product.value.value.match(/^((?:19|20)\d\d)-(0[1-9]|1[012])-(0[1-9]|[12][0-9]|3[01])$/)){
-                return true;
-            }else{
-                alert("请输入正确的日期！");
-            }
+            return document.product.value.value.match(/^((?:19|20)\d\d)-(0[1-9]|1[012])-(0[1-9]|[12][0-9]|3[01])$/);
         }
         if(document.product.name.value=='编码'){
             var reg = /^\d{5}$/;
@@ -51,8 +56,8 @@
             var result;
             result = reg.exec(str);
             return result;
-            }
         }
+      }
     </script>
         </form>
     </div>
