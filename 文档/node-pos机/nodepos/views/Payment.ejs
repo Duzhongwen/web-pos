@@ -17,10 +17,10 @@
                 <% var count = 0,subtotal = 0;products.forEach(function(product,index){%>
                 <tr>
                     <td><%= product.kind %></td>
-                    <td><%= product.name %></td>
+                    <td name="name"><%= product.name %></td>
                     <td><%= product.price %></td>
                     <td><%= product.unit %></td>
-                    <td><%= product.num %></td>
+                    <td name="number"><%= product.num %></td>
                     <% if(product.discounts == "true"&&product.num>2){ %>
                     <td><%= subtotal = (product.num%3 +parseInt(product.num/3)*2) * product.price %>元(原价：<%= product.num * product.price%>元)</td>
                     <% }else{%>
@@ -31,7 +31,7 @@
             </table>
         </div>
     </div>
-    <div class="panel panel-default">
+    <div class="panel panel-default" >
         <div class="panel-heading"><h4>赠送物品</h4></div>
         <div class="panel-body">
             <table class="table table-bordered">
@@ -53,7 +53,7 @@
             <div class="well text-right">
             <p>总计：<span><%= count %>元</span></p>
             <p>节省：<span><%= freeCount %>元</span></p>
-            <a class="btn btn-lg btn-primary" href='/pay'>付款</a>
+            <a class="btn btn-lg btn-primary" href='/pay' onclick="Pop()">付款</a>
             </div>
         </div>
     </div>
@@ -65,7 +65,7 @@ function Pop(){
             product = [];
         }
         var shop=_.findWhere(product,{'name':document.product.name.value});
-        if(document.product.number.value>){
+        if(document.product.number.value>shop.数量){
             alert("剩余XXXX");
         };
     });

@@ -199,6 +199,12 @@ module.exports = function(app) {
         });
     });
 
+    app.get('/discount',function(req,res){
+        res.render('Background/discount',{
+            title:"打折活动"
+        });
+    });
+
     app.get('/add_product', function (req, res) {
 //        if(!req.session.shop){
 //            req.session.shop=['','',''];
