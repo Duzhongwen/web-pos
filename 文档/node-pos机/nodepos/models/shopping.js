@@ -1,12 +1,12 @@
 var mongodb = require('./db');
 
 function Product(product) {
- // this.kind = product.kind;
   this.name = product.name;
   this.price = product.price;
   this.unit = product.unit;
   this.num=product.num;
-  //this.discounts=product.discounts;
+  //this.kind = product.kind;
+  this.discounts=product.discounts;
 }
 
 module.exports = Product;
@@ -15,12 +15,12 @@ module.exports = Product;
 Product.prototype.save = function(property,callback) {
   //要存入数据库的用户文档
   var product = { //创建商品数据对象
-   //   kind: this.kind,
       商品名称: this.name,
       价格: this.price,
       单位: this.unit,
-      数量: this.num
-      //discounts: this.discounts
+      数量: this.num,
+      //分类:this.kind,
+      折扣: this.discounts
   };
     if(property.length !=0){
         for (value in property){

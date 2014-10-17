@@ -14,16 +14,20 @@
                 <th class="text-center"></th>
                 </tr>
               </thead>
-              <% products.forEach(function(product,index){ %>
+              <% products.forEach(function(product,index){ if(product.数量!=0){%>
                  <tr class="text-center">
-                 <td><%= product.kind %></td>
-                 <td><%= product.name %></td>
-                 <td><%= product.price %></td>
-                 <td><%= product.unit %></td>
+                 <% if(product.分类==undefined){%>
+                 <td>无</td>
+                 <%} else { %>
+                 <td><%= product.分类 %></td>
+                 <% } %>
+                 <td><%= product.商品名称 %></td>
+                 <td><%= product.价格 %></td>
+                 <td><%= product.单位 %></td>
                  <td class="hidden"><%= product.discounts %></td>
                  <td><a class="btn btn-primary addCart" type="button" >加入购物车</a></td>
                  </tr>
-                 <% }) %>
+                 <%} }) %>
             </table>
         </div>
     </div>

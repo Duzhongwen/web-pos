@@ -104,9 +104,27 @@ module.exports = function(app) {
         });
     });
     app.get('/pay', function (req, res) {
-        req.session.total = 0;
-        req.session.cart = [];
-        res.redirect('/Product_list');
+        var cart = req.session.cart;
+        Shop.get(function (err, products) {
+            var product = products;
+            if (err) {
+                product = [];
+            }
+            _.each(cart, function (list) {
+                var productes= _.findWhere(product,{'商品名称':list.name});
+                var num=productes.数量-list.num;
+                if(num>=0) {
+                    Shop.update(productes._id, num, function (err) {
+                        if (err) {
+                            req.flash('error', err);
+                        }
+                        req.session.total = 0;
+                        req.session.cart = [];
+                        res.redirect('/Product_list');
+                    });
+                }
+            });
+        });
     });
     app.get('/admin', function (req, res) {
         if (!req.session.property) {

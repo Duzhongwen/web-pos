@@ -5,7 +5,7 @@
         <div class="panel-heading"><h4>购物清单</h4></div>
         <span id="time">2014年08月27 20:49:15</span>
         <div class="panel-body">
-            <table class="table table-bordered text-center">
+            <table class="table table-bordered text-center name="product">
                 <tr>
                     <td>分类</td>
                     <td>名称</td>
@@ -58,4 +58,17 @@
         </div>
     </div>
 </div>
+<script>
+function Pop(){
+    Shop.get(function (err, product) {
+        if (err) {
+            product = [];
+        }
+        var shop=_.findWhere(product,{'name':document.product.name.value});
+        if(document.product.number.value>){
+            alert("剩余XXXX");
+        };
+    });
+}
+</script>
 <%- include footer %>
