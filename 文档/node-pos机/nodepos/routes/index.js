@@ -1,8 +1,9 @@
 /*
  * GET home page.
  */
-
+var moment = require('../public/moment');
 var Shop = require('../models/shopping.js');
+var Rule=require('../models/discounts');
 var _ = require('../public/underscore');
 
 module.exports = function(app) {
@@ -199,23 +200,59 @@ module.exports = function(app) {
         });
     });
 
+    app.get('/add_rule',function(req,res) {
+        res.render('Background/add_rule',{
+            title:"添加规则"
+        });
+    });
+
+    app.post('/add_rule',function(req,res){
+        var rule= req.body.rule.replace(/[\s"']/g,'');//获取规则
+        var indexofdate= rule.indexOf('day');
+        var time = moment(rule.slice(indexofdate+4),"MM/DD/YYYY").valueOf();//获取打折截止时间
+        var maxmin = rule.slice(indexofdate+3,indexofdate+4);
+        var nameInfo = rule.split("&&")[0];
+        nameInfo=nameInfo.split("||");//得到打折商品名
+        var namearray = [];
+        console.log(nameInfo);
+        console.log(time);
+        _.each(nameInfo,function(body){
+            namearray.push({name:body.slice(6),day:time});
+            var starttime = moment(req.body.start_time,"MM/DD/YYYY").valueOf();
+            var endtime = moment(req.body.end_time,"MM/DD/YYYY").valueOf();
+            var buy = parseInt(req.body.buy);
+            var free = parseInt(req.body.free);
+            var newrule = new Rule(body.slice(6),starttime,endtime,buy,free);
+            newrule.save();
+        });
+        res.redirect('/admin');
+    });
+
     app.get('/discount',function(req,res){
-        res.render('Background/discount',{
-            title:"打折活动"
+        Shop.get(function (err, product) {
+            if (err) {
+                product = [];
+            }
+            var allDiscounts = {};
+            if(product.折扣 == null){
+                allDiscounts = null;
+            }else{
+                allDiscounts = product.折扣;
+            }
+            res.render('Background/discount', {
+                title: "打折活动",
+                allDiscounts:allDiscounts
+            });
         });
     });
 
     app.get('/add_product', function (req, res) {
-//        if(!req.session.shop){
-//            req.session.shop=['','',''];
-//        }
         if(!req.session.number){
             req.session.number=0;
         }
         res.render('Background/add_product', {
             title: "添加商品",
             properties: req.session.property,
-           // shop:req.session.shop,
             product_num:req.session.number
         })
     });
@@ -225,10 +262,6 @@ module.exports = function(app) {
             unit = req.body.unit,
             num = req.body.num,
             properties = req.session.property;
-//        var shops={name:name,
-//                   price:price,
-//                   unit:unit };
-//        req.session.shop=shops;
         var shop = new Shop({
             name: name,
             price: price,
@@ -251,7 +284,6 @@ module.exports = function(app) {
                     req.flash('error', err);
                     res.redirect('/add_product');
                 }
-               // req.session.shop=[];
                 req.session.number=0;
                 req.flash('success', "商品保存成功");
                 res.redirect('/admin');
@@ -346,7 +378,6 @@ module.exports = function(app) {
             }
             var product_name = req.session.products;
             var products = _.findWhere(product, {"商品名称": product_name});
-            //delete  property._id;
             var _id='_id';
             property[_id]=products._id;
             Shop.updata_product_property(products._id, property, function (err) {

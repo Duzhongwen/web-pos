@@ -1,48 +1,21 @@
 <%- include header %>
-<div class="col-xs-12 col-md-12 addShop">
-    <div class="col-xs-1 col-md-2"></div>
-      <div class="col-xs-12 col-md-10 shopForm">
-        <form class="form-inline" role="form" method="post" name="product">
-           <table class="table">
-                <div class="row">
-                    <tr>
-                        <td><label for="inputEmail3" class="col-sm-2 control-label">打折规则: </label></td>
-                        <td>
-                        <div class="col-sm-4">
-                            <input type="text" class="form-control" name="name" placeholder="请输入规则信息" size="30" autofocus="true" onchange="check_input()">
-                        </div>
-                        </td>
-                    </tr>
-                    <tr>
-                        <td><label for="inputEmail3" class="col-sm-2 control-label">打折期限:</label></td>
-                        <td>
-                        <div class="col-sm-4">
-                            <input type="text" class="form-control" name="start_value" size="15" placeholder="请输入开始日期" onchange="check_input()">
-                        </div>
-                        <div class="col-sm-4">
-                            <input type="text" class="form-control" name="end_value" size="15" placeholder="请输入结束日期" onchange="check_input()">
-                        </div>
-                        </td>
-                    </tr>
-                    <tr>
-                        <td><label for="inputEmail3" class="col-sm-2 control-label">买: </label></td>
-                        <td>
-                        <div class="col-sm-4">
-                            <input type="text" class="form-control" name="name" size="5" placeholder="输入数目" size="30" autofocus="true" onchange="check_input()">
-                        </div>
-                        <label for="inputEmail3" class="col-sm-2 control-label">赠: </label>
-                        <div class="col-sm-4">
-                            <input type="text" class="form-control" name="name" size="5" placeholder="输入数目" size="30" autofocus="true" onchange="check_input()">
-                        </div>
-                        </td>
-                    </tr>
-                    <tr>
-                    <td><button type="submit"  class="btn btn-primary" id="submit" disabled="true">添加</button></td>
-                    <td><a href="/add_product" class="btn btn-primary">取消</a></td>
-                    </tr>
-                </div>
-           </table>
-        </form>
-      </div>
+<div class="col-xs-12 col-md-12 shopManage">
+    <p>商品打折</p>
+    <div>
+        <a class="btn btn-primary" href="/add_rule">添加规则</a>
     </div>
+    <table class="table table-hover table-responsive">
+        <tr>
+            <td>商品</td>
+            <td>价格</td>
+            <td>时间</td>
+            <td>打折方式</td>
+            <td>操作</td>
+        </tr>
+
+        <tr class="otherAttr">
+
+        </tr>
+    </table>
+</div>
 <%- include footer %>
