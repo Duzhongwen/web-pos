@@ -12,10 +12,15 @@
             <td>打折方式</td>
             <td>操作</td>
         </tr>
-
+        <% allDiscounts.forEach(function(discounts,index) { %>
         <tr class="otherAttr">
-
+            <td><%= discounts.商品名 %></td>
+            <td><%= discounts.价格 %></td>
+            <td><%= discounts.日期.start_time %>到<%= discounts.日期.end_time %></td>
+            <td>买<%= discounts.折扣.buy %>赠<%= discounts.折扣.free %> </td>
+            <td><a>删除</a></td>
         </tr>
+        <% }) %>
     </table>
 </div>
 <%- include footer %>

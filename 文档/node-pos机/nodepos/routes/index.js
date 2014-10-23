@@ -209,36 +209,48 @@ module.exports = function(app) {
     app.post('/add_rule',function(req,res){
         var rule= req.body.rule.replace(/[\s"']/g,'');//获取规则
         var indexofdate= rule.indexOf('day');
-        var time = moment(rule.slice(indexofdate+4),"MM/DD/YYYY").valueOf();//获取打折截止时间
+        var time = moment(rule.slice(indexofdate+4),"MM/DD/YYYY").valueOf();//获取打折商品时间
         var maxmin = rule.slice(indexofdate+3,indexofdate+4);
         var nameInfo = rule.split("&&")[0];
         nameInfo=nameInfo.split("||");//得到打折商品名
+        var price=0;
+//       Shop.get(function (err, product) {
+//       if (err) {
+//            product = [];
+//       }
+//       var products=_.findWhere(product,{'商品名称':nameInfo.slice(6)});
+//          var a =nameInfo.slice(6);
+//           console.log('1111111111111111111111111111111111111111111111111111');
+//           console.log(a);
+//           console.log('2222222222222222222222222222222222222222222222222222');
+//       price=products.价格;
         var namearray = [];
-        console.log(nameInfo);
-        console.log(time);
         _.each(nameInfo,function(body){
             namearray.push({name:body.slice(6),day:time});
-            var starttime = moment(req.body.start_time,"MM/DD/YYYY").valueOf();
-            var endtime = moment(req.body.end_time,"MM/DD/YYYY").valueOf();
+            var starttime =req.body.start_time;
+            //var endtime = moment(req.body.end_time,"MM/DD/YYYY").valueOf();
+            var endtime = req.body.end_time;
             var buy = parseInt(req.body.buy);
             var free = parseInt(req.body.free);
-            var newrule = new Rule(body.slice(6),starttime,endtime,buy,free);
+            var newrule = new Rule(body.slice(6),starttime,endtime,buy,free,price);
             newrule.save();
         });
         res.redirect('/admin');
+//       });
     });
 
     app.get('/discount',function(req,res){
-        Shop.get(function (err, product) {
+        Rule.get(function (err, rules) {
             if (err) {
-                product = [];
+                rules = [];
             }
             var allDiscounts = {};
-            if(product.折扣 == null){
+            if(rules == null){
                 allDiscounts = null;
             }else{
-                allDiscounts = product.折扣;
+                allDiscounts = rules;
             }
+            console.log(allDiscounts);
             res.render('Background/discount', {
                 title: "打折活动",
                 allDiscounts:allDiscounts
